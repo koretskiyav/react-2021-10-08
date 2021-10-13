@@ -1,9 +1,8 @@
-import React from 'react';
 import Review from "./review";
 
 
 function Reviews(props) {
-  const {reviews} = props
+  const {reviews} = props;
   return (
     <div>
       <h3>Reviews</h3>

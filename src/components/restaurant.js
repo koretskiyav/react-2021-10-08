@@ -1,13 +1,12 @@
-import React from 'react';
 import styles from "./product.module.css";
 import Menu from "./menu";
 import Reviews from "./reviews/reviews";
 import Rate from "./rate/rate";
 
 function Restaurant(props) {
-  const {restaurant} = props
+  const {restaurant} = props;
   // Get rating array for all reviews.
-  const rating = restaurant.reviews.map(review => review.rating)
+  const rating = restaurant.reviews.map(review => review.rating);
   // Get average rating value.
   const averageRating = rating.reduce((a, b) => a + b) / rating.length;
 
