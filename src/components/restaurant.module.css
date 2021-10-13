@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  color: orange;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    gap: 15px;
+  }
+}
