@@ -1,4 +1,7 @@
 .rate {
-  display: flex;
-  gap: 8px;
+	display: flex;
+	gap: 8px;
+}
+.icon path {
+	fill: orange;
 }
