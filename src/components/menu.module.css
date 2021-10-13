@@ -1,0 +1,8 @@
+.wrapper {
+  flex: 1;
+}
+.product__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
