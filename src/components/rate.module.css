@@ -2,6 +2,6 @@
 	display: flex;
 	gap: 8px;
 }
-.icon path {
+span svg {
 	fill: orange;
 }
