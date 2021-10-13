@@ -1,0 +1,6 @@
+.icon {
+  width: 25px;
+}
+.icon.selected polygon {
+  fill: #ffcd02;
+}
