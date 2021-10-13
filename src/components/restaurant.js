@@ -2,10 +2,10 @@ import Menu from './menu';
 import styles from './restaurant.module.css';
 import Reviews from './reviews';
 
-export const Restaurant = ({ restorant }) => {
+export const Restaurant = ({ restourant }) => {
   let ratings = [];
 
-  restorant.reviews.forEach((element) => {
+  restourant.reviews.forEach((element) => {
     ratings.push(element.rating);
   });
 
@@ -20,11 +20,11 @@ export const Restaurant = ({ restorant }) => {
   return (
     <div className={styles.wrapper}>
       <h2>
-        Restaurant <span className={styles.title}>{restorant.name}</span>
+        Restaurant <span className={styles.title}>{restourant.name}</span>
       </h2>
       <div className={styles.content}>
-        <Menu menu={restorant.menu} />
-        <Reviews reviews={restorant.reviews} srRate={srRate} />
+        <Menu menu={restourant.menu} />
+        <Reviews reviews={restourant.reviews} srRate={srRate} />
       </div>
     </div>
   );
