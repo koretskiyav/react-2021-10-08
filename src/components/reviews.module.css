@@ -1,2 +1,32 @@
-.reviews {
+.wrapper {
+  flex: 1;
+}
+.rev__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rev {
+  padding: 8px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
+.average {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.rate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.content {
+  padding: 8px;
 }
