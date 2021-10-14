@@ -3,7 +3,7 @@ import React from "react";
 import Rate from "./Rate";
 
 function Review({ review }) {
-  console.log({ review })
+
   return (
     <li className="review">
       <Rate value={review.rating} />

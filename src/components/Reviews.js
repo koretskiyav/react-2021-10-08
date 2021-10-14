@@ -1,7 +1,6 @@
 
-import React, { useState } from "react";
+import React from "react";
 import Review from "./Review";
-import Rate from "./Rate";
 
 function Reviews({ reviews }) {
 

@@ -1,5 +1,5 @@
 
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Tabs from './Tabs';
 import Restaurant from './Restaurant';
 
