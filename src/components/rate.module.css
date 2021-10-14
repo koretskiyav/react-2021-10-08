@@ -1,0 +1,8 @@
+.rate {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+span svg {
+	fill: orange;
+}

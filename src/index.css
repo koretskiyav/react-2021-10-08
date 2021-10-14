@@ -12,7 +12,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+ul {
+  list-style: none;
+}
 button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  padding: 0 15px;
   outline: none;
+  cursor: pointer;
+}
+button:hover {
+  color: orange;
 }
