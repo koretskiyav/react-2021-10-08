@@ -1,0 +1,21 @@
+.filled path {
+  stroke: orange;
+  stroke-width: 5px;
+  fill: orange;
+}
+
+.stroked path {
+  stroke: orange;
+  stroke-width: 5px;
+  fill: none;
+}
+
+.icon {
+  width: 15px;
+  margin: 0 2px;
+  float: left;
+}
+
+.icons {
+  display: flex;
+}
