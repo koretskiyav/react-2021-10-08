@@ -1,23 +1,29 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rate from "./Rate";
-import Menu from "./menu";
+import Menu from "./Menu";
+import Reviews from './Reviews'
 
 function Restaurant({ restaurant }) {
 
   const [rating, setRating] = useState(0);
-  let ratingValues = restaurant.reviews.map((item) => item.rating)
-  let totalRating = ratingValues.reduce((sum, current) => {
-    return sum + current
-  }, 0)
-  setRating(totalRating / restaurant.reviews.length);
+
+  useEffect(() => {
+    if (restaurant.reviews) {
+      const averageRating = restaurant.reviews.reduce((sum, item) => {
+        return sum + item.rating;
+      }, 0) / restaurant.reviews.length;
+      setRating(averageRating)
+    }
+  }, [restaurant.reviews])
 
   return (
     <section className="restaurant">
       <h2 className="restaurant__title">{restaurant.name}</h2>
+      <Rate value={rating} />
       <div className="restaurant__info">
-        <Rate value={rating} />
         <Menu menu={restaurant.menu} />
+        {restaurant.reviews && <Reviews reviews={restaurant.reviews} />}
       </div>
     </section>
   )

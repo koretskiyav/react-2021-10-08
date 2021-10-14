@@ -1,0 +1,10 @@
+
+.review {
+  min-height: 125px;
+  margin-bottom: 8px;
+  padding: 8px;
+  list-style-type: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #eee;
+}

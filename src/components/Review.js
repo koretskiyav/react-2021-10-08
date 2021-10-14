@@ -2,12 +2,13 @@
 import React from "react";
 import Rate from "./Rate";
 
-function Review(props) {
+function Review({ review }) {
+  console.log({ review })
   return (
     <li className="review">
-      <Rate value={props.rating} />
-      <p className="review__feedback">{props.text}</p>
-      <span classname="review__author">{props.user}</span>
+      <Rate value={review.rating} />
+      <p className="review__feedback">{review.text}</p>
+      <span className="review__author">{review.user}</span>
     </li>
   )
 }

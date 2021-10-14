@@ -3,21 +3,15 @@ import React, { useState } from "react";
 import Review from "./Review";
 import Rate from "./Rate";
 
-function Reviews({ reviews, raiting }) {
-  const [rating, setRating] = useState(0);
-  let ratingValues = reviews.map((item) => item.rating)
-  let totalRating = ratingValues.reduce((sum, current) => {
-    return sum + current
-  }, 0)
-  setRating(totalValue / reviews.length)
+function Reviews({ reviews }) {
+
   return (
     <section className="reviews">
-      <h3 className="reviews__title">Raiting</h3>
-      <Rate value={ } />
+      <h3 className="reviews__title">Feedback</h3>
       <ul className="review-list">
         {reviews.map((review) => (
           <Review
-            key={review._id}
+            key={review.id}
             review={review} />
         ))}
       </ul>
