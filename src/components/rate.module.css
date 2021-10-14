@@ -1,0 +1,9 @@
+
+svg {
+	fill: orange;
+}
+
+.stars {
+	cursor: pointer;
+	display: flex;
+}
