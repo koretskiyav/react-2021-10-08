@@ -1,0 +1,22 @@
+.container {
+  border: 2px solid #ccc;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 16px 0
+}
+
+img {
+  text-align: center;
+  float: left;
+  margin-right: 20px;
+  border-radius: 50%;
+  margin: auto;
+  float: none;
+  display: block;
+}
+
+span {
+  font-size: 20px;
+  margin-right: 15px;
+}
