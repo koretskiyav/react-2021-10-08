@@ -1,8 +1,15 @@
 import { useState, useMemo } from 'react';
-import Menu from './menu';
 import Tabs from './tabs';
+import { Restaurant } from './restaurant';
+import { IRestaurant } from '../types';
 
-export default function Restaurants({ restaurants }) {
+interface IProps {
+  restaurants: IRestaurant[]
+}
+
+type IRestaurantProps = Pick<IRestaurant, 'menu' | 'reviews'>;
+
+export default function Restaurants({ restaurants }: IProps) {
   const [activeId, setActiveId] = useState(restaurants[0].id);
 
   const tabs = useMemo(
@@ -11,14 +18,14 @@ export default function Restaurants({ restaurants }) {
   );
 
   const activeRestaurant = useMemo(
-    () => restaurants.find((restaurant) => restaurant.id === activeId),
+    () => restaurants.find(item => item.id === activeId) as IRestaurantProps,
     [activeId, restaurants]
   );
 
   return (
     <div>
       <Tabs tabs={tabs} onChange={setActiveId} />
-      <Menu menu={activeRestaurant.menu} />
+      <Restaurant {...activeRestaurant} />
     </div>
   );
 }
