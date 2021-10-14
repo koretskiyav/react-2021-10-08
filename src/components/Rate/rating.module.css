@@ -1,0 +1,10 @@
+.rate_container{
+    display: flex;
+    align-items: center;
+}
+.rate_icon{
+    height: 24px;
+    width: 24px;
+    margin: 0 2px;
+    fill: #84d00e;
+}

@@ -1,0 +1,7 @@
+.review_card{
+    width: 100%;
+    border-radius: 5px;
+    padding: 16px 16px 32px;
+    border: 1px solid #ccc;
+    margin: 8px 0;
+}

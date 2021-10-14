@@ -7,15 +7,17 @@ import { ReactComponent as Plus } from '../icons/plus.svg';
 function Product({ product, amount, decrement, increment }) {
   return (
     <div className={styles.card}>
-      <p>{product.name}</p>
+      <h3>{product.name}</h3>
       <p>{product.price} $</p>
-      <button onClick={decrement}>
-        <Minus className={styles.icon} />
-      </button>
-      {amount}
-      <button onClick={increment}>
-        <Plus className={styles.icon} />
-      </button>
+      <div className={styles.b_numbers}>
+        <button className={styles.b_numbers__btn} onClick={decrement}>
+          <Minus className={styles.icon} />
+        </button>
+        <span className={styles.b_numbers__count}>{amount}</span>
+        <button className={styles.b_numbers__btn} onClick={increment}>
+          <Plus className={styles.icon} />
+        </button>
+      </div>
     </div>
   );
 }
