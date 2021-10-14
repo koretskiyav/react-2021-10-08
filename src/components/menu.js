@@ -1,4 +1,5 @@
 import Product from './product';
+import Reviews from './reviews';
 
 export default function Menu({ menu }) {
   return (
