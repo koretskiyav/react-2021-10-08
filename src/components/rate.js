@@ -10,7 +10,7 @@ function star(key) {
 }
 
 export default function Rate({ value }) {
-  const result = Array(value)
+  const result = Array(Math.min(Math.max(value, 1), 5))
     .fill(0)
     .map((val, ind) => star(ind));
 
