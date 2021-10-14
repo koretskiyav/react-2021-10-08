@@ -1,0 +1,11 @@
+.rating {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+}
+
+.text {
+  display: flex;
+  width: auto;
+  margin: 0 5px 0 0;
+}

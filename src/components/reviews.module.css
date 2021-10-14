@@ -1,0 +1,30 @@
+.reviews {
+  display: flex;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  margin: 20px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.text {
+  display: flex;
+  margin: 5px 0 10px;
+  width: 100%;
+}
+
+.author {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.stars {
+  display: flex;
+}
