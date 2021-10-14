@@ -1,0 +1,12 @@
+.icon {
+  height: 20px;
+  width: 20px;
+}
+
+.icon path {
+  fill: orange;
+}
+
+.container {
+  margin: 10px 0 0 30px;
+}

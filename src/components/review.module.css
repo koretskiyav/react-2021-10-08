@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.card {
+  margin: 8px;
+  padding: 8px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
