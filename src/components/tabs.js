@@ -1,10 +1,19 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
+
 export default function Tabs({ tabs, onChange }) {
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       {tabs.map(({ id, label }) => (
-        <button key={id} onClick={() => onChange(id)}>
+        <Button
+          className="m-1"
+          gap={10}
+          variant="outline-primary"
+          key={id}
+          onClick={() => onChange(id)}
+        >
           {label}
-        </button>
+        </Button>
       ))}
     </div>
   );
