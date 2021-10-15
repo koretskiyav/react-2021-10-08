@@ -1,0 +1,28 @@
+.rate {
+    background: silver;
+    border-radius: 10px;
+    padding: 10px 0 10px 10px;
+    margin-bottom: 20px;
+}
+
+/* .rate path {
+    fill : {
+        full?'gold': 'silver'
+    }
+
+} */
+.rates path {
+    fill: red;
+}
+
+.ratemain {
+    color: crimson;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.rateall {
+    color: white;
+    font-weight: 700;
+    font-size: 40px;
+}
