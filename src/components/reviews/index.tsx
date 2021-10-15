@@ -6,21 +6,17 @@ interface IProps {
 }
 
 export const Reviews = ({ reviews }: IProps) => {
-  const reviewsList = reviews.reduce((acc, { id, user, text, rating }) => {
-    acc.push(
-      <div key={id}>
-        <RateWithLabel
-          label={
-            <p>
-              <strong>{user}</strong>: <i>{text}</i>
-            </p>
-          }
-          rate={rating} />
-      </div>
-    );
-
-    return acc
-  }, [] as JSX.Element[]);
+  const reviewsList = reviews.map(({ id, user, text, rating }) =>
+    <div key={id}>
+      <RateWithLabel
+        label={
+          <p>
+            <strong>{user}</strong>: <i>{text}</i>
+          </p>
+        }
+        rate={rating} />
+    </div>
+  );
 
   return (
     <div>

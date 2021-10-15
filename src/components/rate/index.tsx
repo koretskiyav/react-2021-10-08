@@ -7,16 +7,11 @@ interface IProps {
 }
 
 const RATE_NUM_MAX = 5;
+const rateArray = [...Array(RATE_NUM_MAX).keys()];
 
 export const Rate = ({ rate }: IProps) => {
-  let stars: JSX.Element[] = [];
-
-  for (let i = 0; i < RATE_NUM_MAX; i++) {
-    stars.push(
-      // dummy index key cause it's not important here
-      <Star key={i} className={i < rate ? '' : styles['-inactive']} />
-    );
-  }
+  // dummy index key cause it's not important here
+  const stars = rateArray.map(i => <Star key={i} className={i < rate ? '' : styles['-inactive']} />);
 
   return (
     <div className={styles.rate}>
