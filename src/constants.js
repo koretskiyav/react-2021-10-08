@@ -1,0 +1,3 @@
+const MAX_POSSIBLE_RATING = 5;
+
+export { MAX_POSSIBLE_RATING };
