@@ -6,3 +6,8 @@
   flex-direction: column;
   width: 40%;
 }
+
+.reviews__list {
+  padding: 0;
+  margin: 0;
+}

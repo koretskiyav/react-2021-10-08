@@ -1,26 +1,16 @@
 
-@import url(./blocks/page/page.css);
-@import url(./blocks/content/content.css);
-@import url(./blocks/tabs/tabs.css);
-
-@import url(./blocks/restaurant/__title/restaurant__title.css);
-@import url(./blocks/restaurant/__info/restaurant__info.css);
-
-@import url(./blocks/menu/menu.css);
-
-@import url(./blocks/product/__card/profuct__card.css);
-@import url(./blocks/product/__title/product__title.css);
-@import url(./blocks/product/__amount/product__amount.css);
-@import url(./blocks/product/__icon/product__icon.css);
-
-@import url(./blocks/reviews/reviews.css);
-@import url(./blocks/reviews/reviews-list.css);
-
-@import url(./blocks/review/review.css);
-@import url(./blocks/review/__feedback/review__feedback.css);
-@import url(./blocks/review/__author/review__author.css);
-
-@import url(./blocks/rate/rate.css);
-
+body {
+  max-width: 100%;
+  min-width: 320px;
+  min-height : 100vh;
+  margin: 0 auto;
+  padding: 36px;
+  border: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 

@@ -1,14 +1,15 @@
 
 import React from "react";
 import Rate from "./Rate";
+import styles from "./review.module.css"
 
 function Review({ review }) {
 
   return (
-    <li className="review">
+    <li className={styles.review}>
       <Rate value={review.rating} />
-      <p className="review__feedback">{review.text}</p>
-      <span className="review__author">{review.user}</span>
+      <p>{review.text}</p>
+      <span className={styles.author}>{review.user}</span>
     </li>
   )
 }
