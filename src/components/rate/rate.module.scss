@@ -1,0 +1,15 @@
+.rate {
+  svg {
+    padding: 5px;
+
+    &.-inactive {
+      rect {
+        fill: #000000;
+      }
+
+      polygon {
+        stroke: #FFFFFF;
+      }
+    }
+  }
+}
