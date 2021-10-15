@@ -10,11 +10,13 @@ import styles from './rate.module.css';
 // };
 
 export default function Rate({ rates }) {
-  const stars = Array(rates.rating).fill(0);
+  const stars = Array(
+    rates.rating < 6 || rates.rating > 0 ? rates.rating : 0
+  ).fill(0);
   return (
-    <div className={styles.rate}>
-      <p>{rates.user}</p>
-      <p>{rates.text}</p>
+    <div>
+      {/* <p>{rates.user}</p>
+      <p>{rates.text}</p> */}
       <p>
         {stars.map((__, index) => {
           return <Star className={styles.rates} key={index} />;

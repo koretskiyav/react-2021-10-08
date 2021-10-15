@@ -14,3 +14,15 @@
 .rates path {
     fill: red;
 }
+
+.ratemain {
+    color: crimson;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.rateall {
+    color: white;
+    font-weight: 700;
+    font-size: 40px;
+}
