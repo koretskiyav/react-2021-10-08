@@ -13,8 +13,19 @@ class Menu extends Component {
     ).isRequired,
   };
 
+  state = { error: null };
+
+  componentDidCatch(error) {
+    this.setState({ error });
+  }
+
   render() {
     const { menu } = this.props;
+
+    if (this.state.error) {
+      return <p>Меню этого ресторона сейчас недоступно :(</p>;
+    }
+
     return (
       <div className={styles.menu}>
         <div>
