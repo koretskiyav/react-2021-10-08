@@ -1,11 +1,56 @@
 .card {
-  margin: 8px;
-  padding: 8px;
-  background: #eee;
+  margin: 8px 0;
+  padding: 8px 16px 32px;
+  background: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
 
-.icon path {
-  fill: orange;
+.icon {
+  fill: #fff;
+}
+
+.b_numbers {
+  display: inline-flex;
+  align-items: center;
+}
+
+.b_numbers__btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.b_numbers__btn:hover {
+  background: rgba(0, 0, 0, 1);
+}
+
+.b_numbers__count {
+  margin: 0 10px;
+}
+
+.button {
+  display: inline-flex;
+  margin-right: 10px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px 15px;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.button_active {
+  background: rgba(0, 0, 0, 1);
+}
+
+.button:hover {
+  background: rgba(0, 0, 0, 1);
 }
