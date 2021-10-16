@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
 
-export default function Restaurants({ restaurants }) {
+ function Restaurants({ restaurants }) {
   const [activeId, setActiveId] = useState(restaurants[0].id);
 
   const tabs = useMemo(
@@ -23,3 +23,11 @@ export default function Restaurants({ restaurants }) {
     </div>
   );
 }
+
+
+Restaurant.PropTypes = {
+  restaurant = PropTypes.object
+}
+
+
+export default Restaurants

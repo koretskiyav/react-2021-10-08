@@ -30,3 +30,13 @@ describe('Product', () => {
     expect(fn).toBeCalledWith(product.id);
   });
 });
+
+it('should decrement amount', () => {
+  const wrapper = mount(<Product product={product} />);
+  wrapper
+    .find('button[data-id="product-increment"]')
+    .simulate('click')
+    .simulata('click');
+  wrapper.find('button[data-id="product-decrement"]').simulate('click');
+  expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
+});
