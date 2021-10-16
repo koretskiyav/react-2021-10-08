@@ -1,17 +1,20 @@
+import { useMemo } from 'react';
 import Menu from './menu';
 import Reviews from './reviews';
 import Rate from './rate';
 import styles from './restaurant.module.css';
 
 export default function Restaurant({ restaurant }) {
-  let countReviews = restaurant.reviews.length;
-  let averageRating = 0;
-  let initialValue = 0;
-  let total = restaurant.reviews.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.rating;
-  }, initialValue);
+  const averageRating = useMemo(() => {
+    let countReviews = restaurant.reviews.length;
+    let initialValue = 0;
+    let total = restaurant.reviews.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.rating;
+    }, initialValue);
 
-  averageRating = Math.floor(total / countReviews);
+    return Math.floor(total / countReviews);
+  }, [restaurant]);
+
 
   return (
     <div>
