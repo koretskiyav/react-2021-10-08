@@ -1,9 +1,20 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 import counter from '../../hocs/counter';
 import styles from './product.module.css';
 import Button from '../button';
-import { useEffect } from 'react';
+
+const propTypes = {
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.number,
+    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  }).isRequired,
+  amount: PropTypes.number,
+  decrement: PropTypes.func,
+  increment: PropTypes.func,
+};
 
 function Product({ product, amount, decrement, increment, fetchData }) {
   useEffect(() => {
@@ -24,7 +35,10 @@ function Product({ product, amount, decrement, increment, fetchData }) {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <Button onClick={decrement} icon="minus" />
+              <Button
+                onClick={decrement}
+                data-id="product-decrement"
+                icon="minus" />
               <Button
                 onClick={increment}
                 data-id="product-increment"
@@ -38,15 +52,6 @@ function Product({ product, amount, decrement, increment, fetchData }) {
   );
 }
 
-Product.propTypes = {
-  product: PropTypes.shape({
-    name: PropTypes.string,
-    price: PropTypes.number,
-    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  }).isRequired,
-  amount: PropTypes.number,
-  decrement: PropTypes.func,
-  increment: PropTypes.func,
-};
+Product.propTypes = propTypes;
 
 export default counter(Product);
