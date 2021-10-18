@@ -9,6 +9,10 @@ const propTypes = {
   rating: PropTypes.number
 };
 
+const defaultProps = {
+  user: 'Anonymous',
+};
+
 const Review = ({ user, text, rating }) => (
   <div className={styles.review}>
     <div className={styles.content}>
@@ -23,10 +27,7 @@ const Review = ({ user, text, rating }) => (
   </div>
 );
 
-Review.defaultProps = {
-  user: 'Anonymous',
-};
-
 Review.propTypes = propTypes;
+Review.defaultProps = defaultProps;
 
 export default Review;
