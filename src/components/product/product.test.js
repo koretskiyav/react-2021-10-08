@@ -24,6 +24,27 @@ describe('Product', () => {
     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
   });
 
+  describe('should decrement amount', () => {
+    it('from zero', () => {
+      const wrapper = mount(<Product product={product} />);
+      wrapper.find('button[data-id="product-decrement"]').simulate('click');
+      expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+    });
+
+    it('with increment click', () => {
+      const wrapper = mount(<Product product={product} />);
+      wrapper.find('button[data-id="product-increment"]').simulate('click');
+      wrapper.find('button[data-id="product-decrement"]').simulate('click');
+      expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+    });
+
+    /* не удалось придумать решение без изменения компонентов
+    it('without increment click', () => {
+      const wrapper = mount(<Product product={product} amount={5} />);
+    
+    }); */
+  });
+
   it('should fetch data', () => {
     const fn = jest.fn();
     mount(<Product product={product} fetchData={fn} />);
