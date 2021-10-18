@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
-
-
+import propTypes from 'prop-types';
 
 import cn from 'classnames';
 
@@ -19,8 +17,8 @@ const Rate = ({ value }) => (
   </div>
 );
 
-Rate.PropTypes = {
-  value = PropTypes.number.isRequired
-}.isRequired
+Rate.propTypes = {
+  value: propTypes.number.isRequired,
+}.isRequired;
 
 export default Rate;
