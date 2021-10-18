@@ -8,7 +8,7 @@ const reviews = restaurants[0].reviews;
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Reviews', () => {
-  it('should render', () => {
+  it('should render all reviews', () => {
     const wrapper = mount(<Reviews reviews={reviews} />);
     expect(wrapper.find('[data-id="reviews-list"]').length).toBe(
       reviews.length
