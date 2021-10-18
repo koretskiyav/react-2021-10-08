@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { ReactComponent as Star } from '../../icons/star.svg';
 
 import styles from './rate.module.css';
+import PropTypes from "prop-types";
 
 const Rate = ({ value }) => (
   <div>
@@ -14,5 +15,9 @@ const Rate = ({ value }) => (
     ))}
   </div>
 );
+
+Rate.propTypes = {
+  value: PropTypes.number,
+};
 
 export default Rate;
