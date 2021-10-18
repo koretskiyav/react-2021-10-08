@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './button.module.css';
 
 import { ReactComponent as PlusIcon } from '../../icons/plus.svg';
@@ -16,5 +17,9 @@ const Button = ({ icon, ...props }) => {
     </button>
   );
 };
+
+Button.propTypes = {
+  icon: PropTypes.oneOf(['plus', 'minus']).isRequired,
+}
 
 export default Button;
