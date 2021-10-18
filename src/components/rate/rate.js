@@ -10,10 +10,11 @@ const propTypes = {
 };
 
 const Rate = ({ value }) => (
-  <div>
+  <div data-id="rate">
     {[...Array(5)].map((_, i) => (
       <Star
         key={i}
+        data-id="rate-star"
         className={cn(styles.star, { [styles.checked]: i <= value - 1 })}
       />
     ))}
