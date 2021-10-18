@@ -9,6 +9,7 @@ const Rate = ({ value }) => (
   <div>
     {[...Array(5)].map((_, i) => (
       <Star
+        data-id="star"
         key={i}
         className={cn(styles.star, { [styles.checked]: i <= value - 1 })}
       />
