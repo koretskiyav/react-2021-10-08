@@ -35,7 +35,10 @@ function Product({ product, amount, decrement, increment, fetchData }) {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <Button onClick={decrement} icon="minus" />
+              <Button
+                onClick={decrement}
+                data-id="product-decrement"
+                icon="minus" />
               <Button
                 onClick={increment}
                 data-id="product-increment"
