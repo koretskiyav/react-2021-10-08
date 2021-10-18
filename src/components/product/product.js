@@ -6,6 +6,8 @@ import Button from '../button';
 import { useEffect } from 'react';
 
 function Product({ product, amount, decrement, increment, fetchData }) {
+  const { name, price, ingredients } = product;
+
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
@@ -14,9 +16,9 @@ function Product({ product, amount, decrement, increment, fetchData }) {
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
         <div>
-          <h4 className={styles.title}>{product.name}</h4>
-          <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <h4 className={styles.title}>{name}</h4>
+          <p className={styles.description}>{ingredients.join(', ')}</p>
+          <div className={styles.price}>{price} $</div>
         </div>
         <div>
           <div className={styles.counter}>
@@ -24,7 +26,11 @@ function Product({ product, amount, decrement, increment, fetchData }) {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <Button onClick={decrement} icon="minus" />
+              <Button
+                onClick={decrement}
+                data-id="product-decrement"
+                icon="minus"
+              />
               <Button
                 onClick={increment}
                 data-id="product-increment"
