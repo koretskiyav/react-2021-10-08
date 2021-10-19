@@ -5,12 +5,10 @@ import styles from './product.module.css';
 import Button from '../button';
 import { decrement, increment } from '../../redux/actions';
 
-function Product({ product, order, decrement, increment, fetchData }) {
+function Product({ product, amount, decrement, increment, fetchData }) {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
-
-  const amount = order[product.id] || 0;
 
   return (
     <div className={styles.product} data-id="product">
@@ -57,8 +55,8 @@ Product.propTypes = {
   decrement: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  order: state.order,
+const mapStateToProps = (state, props) => ({
+  amount: state.order[props.product.id] || 0,
 });
 
 const mapDispatchToProps = {
