@@ -34,8 +34,8 @@ Restaurant.propTypes = {
     menu: PropTypes.arrayOf(PropTypes.object),
     reviews: PropTypes.arrayOf(
       PropTypes.shape({
-        rating: PropTypes.number,
-      })
+        rating: PropTypes.number.isRequired,
+      }).isRequired
     ).isRequired,
   }),
 };

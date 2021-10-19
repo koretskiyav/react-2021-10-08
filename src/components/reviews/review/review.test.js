@@ -25,6 +25,6 @@ describe('Review', () => {
 
   it('should render rating', () => {
     const wrapper = mount(<Review review={review} />);
-    expect(wrapper.find('[data-id="rate"]').children().length).toBe(5);
+    expect(wrapper.find('[data-id="rate"]').length).toBe(1);
   });
 });

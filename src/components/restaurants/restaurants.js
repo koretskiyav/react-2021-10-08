@@ -30,6 +30,6 @@ Restaurants.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
-    })
+    }).isRequired
   ).isRequired,
 };
