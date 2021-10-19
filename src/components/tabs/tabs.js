@@ -23,7 +23,7 @@ Tabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-  })).isRequired,
+  }).isRequired).isRequired,
   activeId: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 }
