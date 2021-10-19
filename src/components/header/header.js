@@ -7,4 +7,8 @@ const Header = () => (
   </header>
 );
 
+// Header.protoType={
+
+// }
+
 export default Header;
