@@ -7,9 +7,9 @@ const product = restaurants[0].menu[0];
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('Product', () => {
+describe('Review', () => {
   it('should render', () => {
-    const wrapper = mount(<Review product={product} />);
+    const wrapper = mount(<Review reviews={reviews} />);
     expect(wrapper.find('[data-id="product"]').length).toBe(1);
   });
 });
