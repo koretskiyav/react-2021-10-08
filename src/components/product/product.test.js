@@ -25,9 +25,9 @@ describe('Product', () => {
   });
 
   it('should decrement amount', () => {
-    const wrapper = mount(<Product product={product} amount={1} />);
+    const wrapper = mount(<Product product={product} initialAmount={3} />);
     wrapper.find('button[data-id="product-decrement"]').simulate('click');
-    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('2');
   });
 
   it('should not decrement amount if amount equals 0', () => {
