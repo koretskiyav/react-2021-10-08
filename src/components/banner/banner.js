@@ -14,6 +14,7 @@ const Banner = ({ heading, children }) => (
 
 Banner.propTypes = {
   heading: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Banner;

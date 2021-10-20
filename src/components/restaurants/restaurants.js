@@ -31,8 +31,8 @@ Restaurants.propTypes = {
       menu: PropTypes.array.isRequired,
       name: PropTypes.string.isRequired,
       reviews: PropTypes.array.isRequired,
-    })
-  ),
+    }).isRequired
+  ).isRequired,
 };
 
 export default Restaurants;
