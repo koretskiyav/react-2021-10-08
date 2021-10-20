@@ -38,7 +38,7 @@ function Basket({ order, amount }) {
 }
 
 const mapStateToProps = (state, props) => ({
-  amount: state.order[props.product] || 0,
+  amount: state.order[props.product],
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
