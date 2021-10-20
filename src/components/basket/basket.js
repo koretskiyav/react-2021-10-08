@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 import Button from '../button';
 import styles from './basket.module.css';
-import { connect } from 'react-redux';
-import { decrement, increment } from '../../redux/actions';
+import { decrement, increment, remove } from '../../redux/actions';
 
-function Basket({ props }) {
+function Basket({ order, amount }) {
+  //console.log(order[product.id]);
   return (
     <div className={styles.basket}>
       <h3>Basket</h3>
@@ -14,6 +15,10 @@ function Basket({ props }) {
           <div className={styles.count} data-id="product-amount">
             {amount}
           </div>
+          {/* {order.map((item) => {
+            const { id, count } = item;
+            return <div key={id}>{count}</div>;
+          })} */}
           <div className={styles.buttons}>
             <Button
               onClick={decrement}
@@ -32,4 +37,13 @@ function Basket({ props }) {
   );
 }
 
-export default Basket;
+const mapStateToProps = (state, props) => ({
+  amount: state.order[props.product] || 0,
+});
+
+const mapDispatchToProps = (dispatch, props) => ({
+  increment: () => dispatch(increment(props.product.id)),
+  decrement: () => dispatch(decrement(props.product.id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

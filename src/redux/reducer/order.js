@@ -1,17 +1,19 @@
-import { DECREMENT, INCREMENT, ADD, DEL } from '../constants';
+import { DECREMENT, INCREMENT, REMOVE } from '../constants';
+
+const initialState = {
+  items: [],
+};
 
 // { [productId]: amount }
-export default function (state = {}, action) {
+export default function (state = initialState, action) {
   const { type, id } = action;
   switch (type) {
     case INCREMENT:
       return { ...state, [id]: (state[id] || 0) + 1 };
     case DECREMENT:
       return { ...state, [id]: (state[id] || 0) - 1 };
-    case ADD:
-      return { ...state, [id]: state[id] };
-    case DEL:
-      return state.filter();
+    case REMOVE:
+      return { ...state };
     default:
       return state;
   }
