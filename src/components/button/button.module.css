@@ -29,3 +29,7 @@
 .button + button {
   margin-left: 1px;
 }
+
+.button path {
+  fill: white;
+}
