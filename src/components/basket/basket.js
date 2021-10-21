@@ -10,7 +10,6 @@ const Basket = ({ order, products }) => {
       id: id,
       name: product.name,
       sum: product.price * amount,
-      amount: amount,
     });
   }
 
