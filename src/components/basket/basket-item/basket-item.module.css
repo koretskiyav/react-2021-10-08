@@ -1,0 +1,9 @@
+.basketItem + .basketItem {
+    margin-top: 16px;
+}
+
+.controls {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
