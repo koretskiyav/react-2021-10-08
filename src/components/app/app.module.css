@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  position: relative;
+}
+
+.basket {
+  margin-left: 20px;
+  min-width: 450px;
+  margin-right: 0;
+}
+
+.main {
+  flex: 1;
+}
