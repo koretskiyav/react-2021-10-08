@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
+import Basket from '../basket/basket';
 
 function Restaurants({ restaurants }) {
   const [activeId, setActiveId] = useState(restaurants[0].id);
@@ -16,10 +17,16 @@ function Restaurants({ restaurants }) {
     [activeId, restaurants]
   );
 
+  const products = useMemo(
+    () => restaurants.map((res) => res.menu).flat(),
+    [restaurants]
+  );
+
   return (
     <div>
       <Tabs tabs={tabs} onChange={setActiveId} activeId={activeId} />
       <Restaurant restaurant={activeRestaurant} />
+      <Basket products={products} />
     </div>
   );
 }
