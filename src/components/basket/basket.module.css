@@ -1,0 +1,24 @@
+.basket {
+  margin: 0 auto;
+  padding: 12px;
+  max-width: 884px;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--grey);
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.amount {
+  margin: 0 10px;
+}
