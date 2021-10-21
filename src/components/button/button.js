@@ -4,10 +4,12 @@ import styles from './button.module.css';
 
 import { ReactComponent as PlusIcon } from '../../icons/plus.svg';
 import { ReactComponent as MinusIcon } from '../../icons/minus.svg';
+import { ReactComponent as DropIcon } from '../../icons/drop.svg';
 
 const icons = {
   plus: PlusIcon,
   minus: MinusIcon,
+  drop: DropIcon,
 };
 
 const Button = ({ icon, ...props }) => {

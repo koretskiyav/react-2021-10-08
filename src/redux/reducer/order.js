@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT } from '../constants';
+import { DECREMENT, INCREMENT, DROPFROMBASKET } from '../constants';
 
 // { [productId]: amount }
 export default function (state = {}, action) {
@@ -7,7 +7,15 @@ export default function (state = {}, action) {
     case INCREMENT:
       return { ...state, [id]: (state[id] || 0) + 1 };
     case DECREMENT:
-      return { ...state, [id]: (state[id] || 0) - 1 };
+      if (state[id] > 1) {
+        return { ...state, [id]: (state[id] || 0) - 1 };
+      } else {
+        delete state[id];
+        return { ...state };
+      }
+    case DROPFROMBASKET:
+      delete state[id];
+      return { ...state };
     default:
       return state;
   }

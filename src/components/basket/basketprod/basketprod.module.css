@@ -1,0 +1,25 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.main {
+  text-align: center;
+  align-items: center;
+  padding: 5px;
+}
+.container {
+  border: 4px solid goldenrod;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 500;
+}
