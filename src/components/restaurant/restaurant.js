@@ -21,10 +21,12 @@ const Restaurant = ({ restaurant }) => {
         <Rate value={averageRating} />
       </Banner>
       <div className={styles.restaurant}>
-        <Menu key={id} menu={menu} />
-        <Basket menu={menu} />
+        <div className={styles.menu}>
+          <Menu key={id} menu={menu} />
+          <Reviews reviews={reviews} />
+        </div>
+        <Basket />
       </div>
-      <Reviews reviews={reviews} />
     </div>
   );
 };

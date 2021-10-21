@@ -1,5 +1,8 @@
 .restaurant {
-  display: flex;
-  gap: 2rem;
-  padding: 12px;
+	display: flex;
+	gap: 2rem;
+	padding: 12px;
+}
+.menu {
+	flex: 2;
 }
