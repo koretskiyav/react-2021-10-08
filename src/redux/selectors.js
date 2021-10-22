@@ -1,17 +1,27 @@
-const productsSelector = (state) =>
-  state.restaurants.flatMap((restaurant) => restaurant.menu);
+import { createSelector } from 'reselect';
 
-export const orderProductsSelector = (state) =>
-  Object.keys(state.order)
-    .filter((productId) => state.order[productId] > 0)
-    .map((productId) =>
-      productsSelector(state).find((product) => product.id === productId)
-    )
-    .map((product) => ({
-      product,
-      amount: state.order[product.id],
-      subtotal: state.order[product.id] * product.price,
-    }));
+const restaurantsSelector = (state) => state.restaurants;
+const orderSelector = (state) => state.order;
 
-export const totalSelector = (state) =>
-  orderProductsSelector(state).reduce((acc, { subtotal }) => acc + subtotal, 0);
+const productsSelector = createSelector([restaurantsSelector], (restaurants) =>
+  restaurants.flatMap((restaurant) => restaurant.menu)
+);
+
+export const orderProductsSelector = createSelector(
+  [orderSelector, productsSelector],
+  (order, products) =>
+    Object.keys(order)
+      .filter((productId) => order[productId] > 0)
+      .map((productId) => products.find((product) => product.id === productId))
+      .map((product) => ({
+        product,
+        amount: order[product.id],
+        subtotal: order[product.id] * product.price,
+      }))
+);
+
+export const totalSelector = createSelector(
+  [orderProductsSelector],
+  (orderProducts) =>
+    orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
+);
