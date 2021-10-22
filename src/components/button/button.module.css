@@ -19,6 +19,10 @@
   text-transform: uppercase;
 }
 
+.button svg {
+  fill: var(--white);
+}
+
 .button:hover,
 .button:focus,
 .button:active {
