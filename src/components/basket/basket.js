@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -8,34 +8,12 @@ import BasketItem from './basketItem/basketItem';
 
 import styles from './basket.module.css';
 
-const Basket = ({ order }) => {
+const Basket = ({ basketAmount, basketContent, basketTotal }) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleActivateBasket = () => {
     setIsActive(isActive ? false : true);
   };
-
-  const basketAmount = useMemo(
-    () => Object.values(order).reduce((acc, { amount }) => acc + amount, 0),
-    [order]
-  );
-
-  const basketContent = useMemo(() => {
-    return Object.entries(order).length ? (
-      Object.entries(order).map(([id, product]) => (
-        <BasketItem key={id} product={product} />
-      ))
-    ) : (
-      <p>Your basket is empty. Please add the product</p>
-    );
-  }, [order]);
-
-  const basketTotal = useMemo(() => {
-    return Object.values(order).reduce(
-      (acc, { amount, price }) => acc + amount * price,
-      0
-    );
-  }, [order]);
 
   return (
     <div
@@ -57,11 +35,27 @@ const Basket = ({ order }) => {
 };
 
 Basket.propTypes = {
-  order: PropTypes.object.isRequired
-}
+  basketAmount: PropTypes.number,
+  basketContent: PropTypes.node,
+  basketTotal: PropTypes.number,
+};
 
 const mapStateToProps = (state) => ({
-  order: state.order,
+  basketAmount: Object.values(state.order).reduce(
+    (acc, { amount }) => acc + amount,
+    0
+  ),
+  basketContent: Object.entries(state.order).length ? (
+    Object.entries(state.order).map(([id, product]) => (
+      <BasketItem key={id} product={product} />
+    ))
+  ) : (
+    <p>Your basket is empty. Please add the product</p>
+  ),
+  basketTotal: Object.values(state.order).reduce(
+    (acc, { amount, price }) => acc + amount * price,
+    0
+  ),
 });
 
 export default connect(mapStateToProps)(Basket);
