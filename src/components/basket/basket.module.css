@@ -1,0 +1,24 @@
+.basket {
+	min-width: 380px;
+	display: flex;
+	flex-direction: column;
+}
+.basket__top {
+	display: flex;
+	justify-content: space-around;
+	gap: 1.5rem;
+	align-items: center;
+}
+.basket__bottom {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0 1.5rem;
+}
+.price {
+	margin-top: 8px;
+	font-size: 18px;
+	line-height: 28px;
+	font-weight: 600;
+	color: var(--yellow);
+}

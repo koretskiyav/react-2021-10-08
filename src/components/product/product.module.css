@@ -1,5 +1,5 @@
 .product {
-  padding: 20px 26px;
+  padding: 15px 20px;
   margin-bottom: 12px;
   border: 1px solid var(--grey);
   background-color: var(--white);
@@ -67,7 +67,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: auto;
+  gap: 0.3rem;
 }
 
 @media all and (max-width: 767px) {

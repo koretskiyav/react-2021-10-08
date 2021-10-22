@@ -3,9 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './product.module.css';
 import Button from '../button';
-import { decrement, increment } from '../../redux/actions';
+import { decrement, increment, remove } from '../../redux/actions';
 
-function Product({ product, amount, decrement, increment, fetchData }) {
+function Product({
+  product,
+  amount,
+  decrement,
+  increment,
+  remove,
+  fetchData,
+  isInBasket,
+}) {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
@@ -15,8 +23,12 @@ function Product({ product, amount, decrement, increment, fetchData }) {
       <div className={styles.content}>
         <div>
           <h4 className={styles.title}>{product.name}</h4>
-          <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <p className={styles.description}>
+            {isInBasket ? '' : product.ingredients.join(', ')}
+          </p>
+          <div className={styles.price}>
+            {isInBasket ? product.price * amount : product.price} $
+          </div>
         </div>
         <div>
           <div className={styles.counter}>
@@ -34,6 +46,13 @@ function Product({ product, amount, decrement, increment, fetchData }) {
                 icon="plus"
                 data-id="product-increment"
               />
+              {isInBasket && (
+                <Button
+                  onClick={remove}
+                  icon="delete"
+                  data-id="product-clear"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -59,14 +78,10 @@ const mapStateToProps = (state, props) => ({
   amount: state.order[props.product.id] || 0,
 });
 
-// const mapDispatchToProps = {
-//   increment,
-//   decrement,
-// };
-
 const mapDispatchToProps = (dispatch, props) => ({
   increment: () => dispatch(increment(props.product.id)),
   decrement: () => dispatch(decrement(props.product.id)),
+  remove: () => dispatch(remove(props.product.id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
