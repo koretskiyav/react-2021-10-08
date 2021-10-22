@@ -5,7 +5,8 @@ const productsSelector = (state) => state.products;
 const orderSelector = (state) => state.order;
 
 export const orderProductsSelector = createSelector(
-  [orderSelector, productsSelector],
+  orderSelector,
+  productsSelector,
   (order, products) =>
     Object.keys(order)
       .filter((productId) => order[productId] > 0)
