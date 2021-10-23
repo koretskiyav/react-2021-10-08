@@ -12,7 +12,7 @@ export const restaurantSelector = (state, id) => restaurantsSelector(state)[id];
 
 export const reviewSelector = (state, id) => reviewsSelector(state)[id];
 
-export const userSelector = (state, id) => usersSelector(state)[id].name;
+export const userSelector = (state, id) => usersSelector(state)[id]?.name;
 
 export const amountSelector = (state, id) => orderSelector(state)[id] || 0;
 
