@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT } from '../constants';
+import { DECREMENT, INCREMENT, REMOVE } from '../constants';
 
 // { [productId]: amount }
 export default function (state = {}, action) {
@@ -26,6 +26,11 @@ export default function (state = {}, action) {
           price: price,
           id: id,
         },
+      };
+    case REMOVE:
+      return {
+        ...state,
+        id,
       };
     default:
       return state;
