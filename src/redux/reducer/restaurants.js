@@ -11,11 +11,14 @@ export default (restaurants = defaultRestaurants, action) => {
 
   switch (type) {
     case ADD_REVIEW: {
+      const restaurantData = restaurants[restaurant];
+      const { reviews } = restaurantData;
+
       return {
         ...restaurants,
         [restaurant]: {
-          ...restaurants[restaurant],
-          reviews: [...restaurants[restaurant].reviews, review.id],
+          ...restaurantData,
+          reviews: [...reviews, review.id],
         },
       };
     }
