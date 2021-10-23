@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { reviewsSelector, usersSelector } from '../../../redux/selectors';
+import { reviewSelector, userSelector } from '../../../redux/selectors';
 
 import Rate from '../../rate';
 import styles from './review.module.css';
@@ -29,9 +29,11 @@ const Review = ({ review, user }) => {
 };
 
 Review.propTypes = {
+  review: PropTypes.shape({
+    text: PropTypes.string,
+    rating: PropTypes.number,
+  }).isRequired,
   user: PropTypes.string,
-  text: PropTypes.string,
-  rating: PropTypes.number.isRequired,
 };
 
 Review.defaultProps = {
@@ -39,12 +41,12 @@ Review.defaultProps = {
 };
 
 const mapStateToProps = (state, { id }) => {
-  const review = reviewsSelector(state)[id];
+  const review = reviewSelector(state, id);
   const { userId } = review;
 
   return {
     review,
-    user: usersSelector(state)[userId].name,
+    user: userSelector(state, userId),
   };
 };
 
