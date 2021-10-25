@@ -42,9 +42,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
   );
 }
 
-export default connect((state) => {
-  return {
-    total: totalSelector(state),
-    orderProducts: orderProductsSelector(state),
-  };
-})(Basket);
+export default connect((state) => ({
+  total: totalSelector(state),
+  orderProducts: orderProductsSelector(state),
+}))(Basket);
