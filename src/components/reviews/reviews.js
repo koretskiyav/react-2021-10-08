@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
@@ -22,4 +23,8 @@ Reviews.propTypes = {
   ).isRequired,
 };
 
-export default Reviews;
+const mapStateToProps = (state, props) => ({
+  reviews: props.reviews.map((review) => state.reviews[review]),
+});
+
+export default connect(mapStateToProps)(Reviews);
