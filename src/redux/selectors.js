@@ -23,7 +23,7 @@ export const orderProductsSelector = createSelector(
 
 export const reviewSelector = (state, id, review = state.reviews[id]) => ({
   ...review,
-  user: state.users[review.userId].name
+  user: state.users[review.userId]?.name
 });
 
 export const totalSelector = createSelector(

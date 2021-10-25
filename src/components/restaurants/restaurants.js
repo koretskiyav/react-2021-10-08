@@ -22,11 +22,10 @@ function Restaurants({ restaurants }) {
 
 Restaurants.propTypes = {
   restaurants: PropTypes.objectOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string,
-    }).isRequired
+    PropTypes.object.isRequired
   ).isRequired,
 };
 
-export default connect((state) => ({ restaurants: restaurantsSelector(state) }))(Restaurants);
+export default connect((state) => ({
+  restaurants: restaurantsSelector(state)
+}))(Restaurants);

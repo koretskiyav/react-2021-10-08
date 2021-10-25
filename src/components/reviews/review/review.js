@@ -27,4 +27,8 @@ Review.propTypes = {
   rating: PropTypes.number.isRequired,
 };
 
+Review.defaultProps = {
+  user: 'Anonymous'
+}
+
 export default connect((state, props) => reviewSelector(state, props.id))(Review);
