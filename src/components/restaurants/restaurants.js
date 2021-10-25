@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
+import { totalRestaurantsSelector } from '../../redux/selectors';
 
 function Restaurants({ restaurants }) {
   const [activeId, setActiveId] = useState(restaurants[0].id);
@@ -34,8 +35,8 @@ Restaurants.propTypes = {
   ).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  restaurants: state.restaurants,
-});
-
-export default connect(mapStateToProps)(Restaurants);
+export default connect((state) => {
+  return {
+    restaurants: totalRestaurantsSelector(state),
+  };
+})(Restaurants);
