@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
@@ -28,7 +29,7 @@ const Restaurant = ({ restaurant, allReviews }) => {
       </Banner>
       <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
       {activeTab === 'menu' && <Menu menu={menu} key={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} allReviews={allReviews} />}
+      {activeTab === 'reviews' && <Reviews reviews={reviews} />}
     </div>
   );
 };
@@ -44,4 +45,6 @@ Restaurant.propTypes = {
   }).isRequired,
 };
 
-export default Restaurant;
+const mapStateToProps = ({ reviews }) => ({ allReviews: reviews });
+
+export default connect(mapStateToProps)(Restaurant);
