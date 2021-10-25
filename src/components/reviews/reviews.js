@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
-import {getReviewsSelector, getUsersSelector} from "../../redux/selectors";
+import {restaurantsSelector} from "../../redux/selectors";
 
-const Reviews = ({ reviews, users }) => {
+const Reviews = ({ currentRestaurant, restaurants }) => {
   return (
     <div className={styles.reviews}>
 
-      {reviews.map((review) => (
-        <Review key={review.id} review={review} user={users[review.userId]} />
+      {restaurants[currentRestaurant].reviews.map((id) => (
+        <Review key={id} reviewId={id} />
       ))}
       <ReviewForm />
     </div>
@@ -25,9 +25,8 @@ Reviews.propTypes = {
   ).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviews: getReviewsSelector(state),
-  users: state.users,
+const mapStateToProps = (state, props) => ({
+    restaurants: restaurantsSelector(state)
 });
 
 export default connect(mapStateToProps)(Reviews);

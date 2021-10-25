@@ -9,7 +9,9 @@ function Restaurants({ restaurants }) {
   const [activeId, setActiveId] = useState(restaurants[firstKey].id);
 
   const tabs = useMemo(
-    () => Object.keys(restaurants).map(({ id, name }) => ({ id, label: name })),
+    () => Object.keys(restaurants).map((key) => {
+      return {id: restaurants[key].id, label: restaurants[key].name};
+    }),
     [restaurants]
   );
 
