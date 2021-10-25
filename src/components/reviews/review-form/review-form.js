@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-
+import { createreview } from '../../../redux/actions';
 import useForm from '../../../hooks/use-form';
 import Rate from '../../rate';
 import Button from '../../button';
@@ -8,9 +8,9 @@ import styles from './review-form.module.css';
 
 const INITIAL_VALUES = { name: '', text: '', rating: 3 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ onSubmit, restid }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
-
+  values.restid = { restid };
   const handleSubmit = (ev) => {
     ev.preventDefault();
     onSubmit(values);
@@ -51,6 +51,7 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (values) => dispatch(createreview(values)),
+});
+export default connect(null, mapDispatchToProps)(ReviewForm);

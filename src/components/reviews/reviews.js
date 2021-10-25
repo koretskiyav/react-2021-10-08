@@ -4,13 +4,13 @@ import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 import { connect } from 'react-redux';
 
-const Reviews = ({ reviewids, reviews }) => {
+const Reviews = ({ reviewids, reviews, restid }) => {
   return (
     <div className={styles.reviews}>
       {reviewids.map((review) => (
         <Review key={review} rw={reviews[review]} />
       ))}
-      <ReviewForm />
+      <ReviewForm restid={restid} />
     </div>
   );
 };
