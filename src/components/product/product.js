@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import styles from './product.module.css';
 import Button from '../button';
 import { decrement, increment } from '../../redux/actions';
+import {
+  productAmountByIdSelector,
+  productByIdSelector,
+} from '../../redux/selectors';
 
 function Product({ product, amount, decrement, increment, fetchData }) {
   useEffect(() => {
@@ -56,8 +60,8 @@ Product.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  amount: state.order[props.id] || 0,
-  product: state.products[props.id],
+  amount: productAmountByIdSelector(state)(props.id),
+  product: productByIdSelector(state)(props.id),
 });
 
 // const mapDispatchToProps = {

@@ -1,41 +1,28 @@
-import { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
+import { setActiveRestaurant } from '../../redux/actions';
+import {
+  restaurantActiveIdSelector,
+  restaurantListNameSelector,
+} from '../../redux/selectors';
 
-function Restaurants({ restaurants }) {
-  const [activeId, setActiveId] = useState(restaurants[0].id);
-
-  const tabs = useMemo(
-    () => restaurants.map(({ id, name }) => ({ id, label: name })),
-    [restaurants]
-  );
-
-  const activeRestaurant = useMemo(
-    () => restaurants.find((restaurant) => restaurant.id === activeId),
-    [activeId, restaurants]
-  );
-
+function Restaurants({ tabs, activeId, setActiveRestaurant }) {
   return (
     <div>
-      <Tabs tabs={tabs} onChange={setActiveId} activeId={activeId} />
-      <Restaurant restaurant={activeRestaurant} />
+      <Tabs tabs={tabs} activeId={activeId} onChange={setActiveRestaurant} />
+      <Restaurant />
     </div>
   );
 }
 
-Restaurants.propTypes = {
-  restaurants: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string,
-    }).isRequired
-  ).isRequired,
-};
-
 const mapStateToProps = (state) => ({
-  restaurants: state.restaurants,
+  tabs: restaurantListNameSelector(state),
+  activeId: restaurantActiveIdSelector(state),
 });
 
-export default connect(mapStateToProps)(Restaurants);
+const mapDispatchToProps = (dispatch) => ({
+  setActiveRestaurant: (id) => dispatch(setActiveRestaurant(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Restaurants);

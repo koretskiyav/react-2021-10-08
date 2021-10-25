@@ -5,15 +5,17 @@ import Rate from '../../rate';
 import Button from '../../button';
 
 import styles from './review-form.module.css';
+import { submitForm } from '../../../redux/actions';
+import { activeRestaurantSelector } from '../../../redux/selectors';
 
 const INITIAL_VALUES = { name: '', text: '', rating: 3 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ onSubmit, restaurant }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onSubmit(values);
+    onSubmit({ ...values, restaurant });
     reset();
   };
 
@@ -51,6 +53,12 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+const mapStateToProps = (state) => ({
+  restaurant: activeRestaurantSelector(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (values) => dispatch(submitForm(values)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
