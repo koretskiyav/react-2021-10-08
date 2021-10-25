@@ -30,12 +30,7 @@ function Restaurants({ restaurants }) {
 }
 
 Restaurants.propTypes = {
-  restaurants: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string,
-    }).isRequired
-  ).isRequired,
+  restaurants: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = (state) => ({
