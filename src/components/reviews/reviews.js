@@ -3,6 +3,7 @@ import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 import { connect } from 'react-redux';
+import { revSelector } from '../../redux/selectors';
 
 const Reviews = ({ reviewids, reviews, restid }) => {
   return (
@@ -24,7 +25,7 @@ Reviews.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  reviews: state.reviews,
+  reviews: revSelector(state),
 });
 
 export default connect(mapStateToProps)(Reviews);
