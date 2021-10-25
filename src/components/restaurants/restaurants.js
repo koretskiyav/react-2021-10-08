@@ -4,29 +4,23 @@ import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
 
-function Restaurants({ restaurants }) {
-  const [activeId, setActiveId] = useState(restaurants[0].id);
-
+function Restaurants({ restaurants, reviews }) {
+  const [activeId, setActiveId] = useState(Object.keys(restaurants)[0]);
   const tabs = useMemo(
-    () => restaurants.map(({ id, name }) => ({ id, label: name })),
+    () => Object.entries(restaurants).map(([id, { name }]) => ({ id, label: name })),
     [restaurants]
-  );
-
-  const activeRestaurant = useMemo(
-    () => restaurants.find((restaurant) => restaurant.id === activeId),
-    [activeId, restaurants]
   );
 
   return (
     <div>
       <Tabs tabs={tabs} onChange={setActiveId} activeId={activeId} />
-      <Restaurant restaurant={activeRestaurant} />
+      <Restaurant restaurant={restaurants[activeId]} allReviews={reviews} />
     </div>
   );
 }
 
 Restaurants.propTypes = {
-  restaurants: PropTypes.arrayOf(
+  restaurants: PropTypes.objectOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string,
@@ -36,6 +30,7 @@ Restaurants.propTypes = {
 
 const mapStateToProps = (state) => ({
   restaurants: state.restaurants,
+  reviews: state.reviews,
 });
 
 export default connect(mapStateToProps)(Restaurants);
