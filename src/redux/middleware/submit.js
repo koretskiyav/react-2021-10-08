@@ -12,7 +12,7 @@ export default (store) => (next) => (action) => {
     ...action.form.restaurant,
   };
 
-  restaurant.reviews.push(reviewId);
+  restaurant.reviews = [...restaurant.reviews, reviewId];
 
   const patchedAction = {
     ...action,
