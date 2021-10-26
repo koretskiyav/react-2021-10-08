@@ -53,5 +53,5 @@ const ReviewForm = ({ onSubmit }) => {
 };
 
 export default connect(null, (dispatch) => ({
-  onSubmit: (values) => {console.log(values);dispatch(addReview(values))}, // TODO
+  onSubmit: (values) => {dispatch(addReview(values))}, // TODO
 }))(ReviewForm);

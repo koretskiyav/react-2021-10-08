@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import Rate from '../../rate';
 import styles from './review.module.css';
 
-function Review({reviewId, review, users}) {
+function Review({review, users}) {
   const user = users[review?.userId] ? users[review?.userId] : null;
   return (
     <div className={styles.review} data-id="review">
       <div className={styles.content}>
         <div>
           <h4 className={styles.name} data-id="review-user">
-            { user.name ? user.name : "Anonymous"}
+            { user && user.name ? user.name : "Anonymous"}
           </h4>
           <p className={styles.comment} data-id="review-text">
             {review && (review.text)}
