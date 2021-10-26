@@ -5,16 +5,20 @@ import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
+import { connect } from 'react-redux';
+import {
+  averageRatingSelector,
+  restaurantSelector,
+} from '../../redux/selectors';
 
-const Restaurant = ({ restaurant }) => {
+const Restaurant = ({ restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
-
   const [activeTab, setActiveTab] = useState('menu');
 
-  const averageRating = useMemo(() => {
-    const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
-    return Math.round(total / reviews.length);
-  }, [reviews]);
+  // const averageRating = useMemo(() => {
+  //   const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
+  //   return Math.round(total / reviews.length);
+  // }, [reviews]);
 
   const tabs = [
     { id: 'menu', label: 'Menu' },
@@ -28,22 +32,33 @@ const Restaurant = ({ restaurant }) => {
       </Banner>
       <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
       {activeTab === 'menu' && <Menu menu={menu} key={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} />}
+      {activeTab === 'reviews' && (
+        <Reviews reviews={reviews} restaurantId={id} />
+      )}
     </div>
   );
 };
 
-Restaurant.propTypes = {
-  restaurant: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    menu: PropTypes.array,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        rating: PropTypes.number.isRequired,
-      }).isRequired
-    ).isRequired,
-  }).isRequired,
+Restaurant.defaultProps = {
+  averageRating: 3,
 };
 
-export default Restaurant;
+// Restaurant.propTypes = {
+//   restaurant: PropTypes.shape({
+//     id: PropTypes.string.isRequired,
+//     name: PropTypes.string,
+//     menu: PropTypes.array,
+//     reviews: PropTypes.arrayOf(
+//       PropTypes.shape({
+//         rating: PropTypes.number.isRequired,
+//       }).isRequired
+//     ).isRequired,
+//   }).isRequired,
+// };
+
+export default connect((state, props) => {
+  return {
+    restaurant: restaurantSelector(state)(props.id),
+    averageRating: averageRatingSelector(state)(props.id),
+  };
+})(Restaurant);
