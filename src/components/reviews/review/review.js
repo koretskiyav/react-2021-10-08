@@ -6,7 +6,6 @@ import styles from './review.module.css';
 
 const Review = ({ user, review }) => {
   const { text, rating } = review;
-  console.log(review);
   return (
     <div className={styles.review} data-id="review">
       <div className={styles.content}>

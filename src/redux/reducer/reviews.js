@@ -7,13 +7,14 @@ const defaultReviews = normalizedReviews.reduce(
 );
 
 export default (reviews = defaultReviews, action) => {
-  const { type, review } = action;
+  const { type, values } = action;
 
   switch (type) {
     case SUBMIT:
+      const { id, rating, text, userId } = values;
       return {
         ...reviews,
-        [review.id]: review,
+        [values.id]: { id, rating, text, userId },
       };
     default:
       return reviews;
