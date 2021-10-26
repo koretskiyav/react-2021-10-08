@@ -12,7 +12,7 @@ const Reviews = ({ currentRestaurant, restaurants }) => {
       {restaurants[currentRestaurant].reviews.map((id) => (
         <Review key={id} reviewId={id} />
       ))}
-      <ReviewForm id={restaurants[currentRestaurant].id}/>
+      <ReviewForm id={currentRestaurant}/>
     </div>
   );
 };
