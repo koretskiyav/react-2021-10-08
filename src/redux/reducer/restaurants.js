@@ -1,26 +1,17 @@
 import produce from 'immer';
-import { ADD_REVIEW } from '../constants';
-import { normalizedRestaurants } from '../../fixtures';
+import { ADD_REVIEW, LOAD_RESTAURANTS } from '../constants';
 import { arrToMap } from '../utils';
 
-export default (state = arrToMap(normalizedRestaurants), action) => {
-  const { type, restId, reviewId } = action;
+export default (state = {}, action) => {
+  const { type, restId, reviewId, data } = action;
 
   switch (type) {
+    case LOAD_RESTAURANTS:
+      return arrToMap(data);
     case ADD_REVIEW:
       return produce(state, (draft) => {
         draft[restId].reviews.push(reviewId);
       });
-
-    // const restaurant = state[restId];
-    // return {
-    //   ...state,
-    //   [restId]: {
-    //     ...restaurant,
-    //     reviews: [...restaurant.reviews, reviewId],
-    //   },
-    // };
-
     default:
       return state;
   }
