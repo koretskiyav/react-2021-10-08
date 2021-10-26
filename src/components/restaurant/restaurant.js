@@ -1,20 +1,20 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
+import {
+  restaurantSelectorById,
+  averageRatingSelector,
+} from '../../redux/selectors';
 
-const Restaurant = ({ restaurant }) => {
+const Restaurant = ({ restaurantId, restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
 
   const [activeTab, setActiveTab] = useState('menu');
-
-  const averageRating = useMemo(() => {
-    const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
-    return Math.round(total / reviews.length);
-  }, [reviews]);
 
   const tabs = [
     { id: 'menu', label: 'Menu' },
@@ -28,22 +28,27 @@ const Restaurant = ({ restaurant }) => {
       </Banner>
       <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
       {activeTab === 'menu' && <Menu menu={menu} key={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} />}
+      {activeTab === 'reviews' && (
+        <Reviews reviews={reviews} key={id} restaurantId={restaurantId} />
+      )}
     </div>
   );
 };
 
 Restaurant.propTypes = {
+  restaurantId: PropTypes.string.isRequired,
   restaurant: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string,
-    menu: PropTypes.array,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        rating: PropTypes.number.isRequired,
-      }).isRequired
-    ).isRequired,
+    menu: PropTypes.arrayOf(PropTypes.string),
+    reviews: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  averageRating: PropTypes.number,
 };
 
-export default Restaurant;
+const mapStateToProps = (state, props) => ({
+  restaurant: restaurantSelectorById(state, props),
+  averageRating: averageRatingSelector(state, props),
+});
+
+export default connect(mapStateToProps)(Restaurant);
