@@ -32,10 +32,15 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-export const averageRatingSelector = (state, { reviews }) => {
+export const averageRatingSelector = (state, { restaurant: { reviews } }) => {
   const total = reviews.reduce((acc, id) => acc + state.reviews[id].rating, 0);
   return Math.round(total / reviews.length);
 };
 
 export const amountSelector = (state, props) => state.order[props.id] || 0;
 export const productSelector = (state, props) => state.products[props.id];
+
+export const tabsSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) => Object.entries(restaurants).map(([id, { name }]) => ({ id, label: name }))
+);

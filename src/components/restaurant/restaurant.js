@@ -43,5 +43,5 @@ Restaurant.propTypes = {
 };
 
 export default connect((state, props) => ({
-  averageRating: averageRatingSelector(state, props.restaurant)
+  averageRating: averageRatingSelector(state, props)
 }))(Restaurant);
