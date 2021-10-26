@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   restaurantSelector,
   averageRatingSelector,
 } from '../../redux/selectors';
-import { initRestaurant } from '../../redux/actions';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
@@ -12,7 +11,7 @@ import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
 
-const Restaurant = ({ restaurant, averageRating, initRestaurant }) => {
+const Restaurant = ({ restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
 
   const [activeTab, setActiveTab] = useState('menu');
@@ -21,10 +20,6 @@ const Restaurant = ({ restaurant, averageRating, initRestaurant }) => {
     { id: 'menu', label: 'Menu' },
     { id: 'reviews', label: 'Reviews' },
   ];
-
-  useEffect(() => {
-    initRestaurant(id);
-  }, [id]);
 
   return (
     <div>
@@ -47,17 +42,9 @@ Restaurant.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = (state, { id }) => {
-  const restaurant = restaurantSelector(state, id);
-
-  return {
-    restaurant,
-    averageRating: averageRatingSelector(state, restaurant.reviews),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  initRestaurant: (id) => dispatch(initRestaurant(id)),
+const mapStateToProps = (state, props) => ({
+  restaurant: restaurantSelector(state, props),
+  averageRating: averageRatingSelector(state, props),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Restaurant);
+export default connect(mapStateToProps)(Restaurant);

@@ -1,29 +1,33 @@
-import { useState } from 'react';
 import { connect } from 'react-redux';
-import { restaurantIdsSelector, tabsSelector } from '../../redux/selectors';
+import {
+  activeIdRestaurantSelector,
+  tabsSelector,
+} from '../../redux/selectors';
+import { initRestaurant } from '../../redux/actions';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
 
-function Restaurants({ restaurantIds, tabs }) {
-  const [activeId, setActiveId] = useState(restaurantIds[0]);
-
+function Restaurants({ tabs, restaurantId, initRestaurant }) {
   return (
     <div>
-      <Tabs tabs={tabs} onChange={setActiveId} activeId={activeId} />
-      <Restaurant id={activeId} />
+      <Tabs tabs={tabs} onChange={initRestaurant} activeId={restaurantId} />
+      <Restaurant id={restaurantId} />
     </div>
   );
 }
 
 Restaurants.propTypes = {
-  restaurantIds: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   tabs: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
+  restaurantId: activeIdRestaurantSelector(state),
   tabs: tabsSelector(state),
-  restaurantIds: restaurantIdsSelector(state),
 });
 
-export default connect(mapStateToProps)(Restaurants);
+const mapDispatchToProps = (dispatch) => ({
+  initRestaurant: (id) => dispatch(initRestaurant(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Restaurants);
