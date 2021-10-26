@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { reviewsSelector } from '../../redux/selectors';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
@@ -7,8 +8,8 @@ import styles from './reviews.module.css';
 const Reviews = ({ reviews }) => {
   return (
     <div className={styles.reviews}>
-      {reviews.map((review) => (
-        <Review key={review.id} {...review} />
+      {reviews.map((id) => (
+        <Review key={id} id={id} />
       ))}
       <ReviewForm />
     </div>
@@ -23,8 +24,4 @@ Reviews.propTypes = {
   ).isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-  reviews: props.reviews.map((review) => state.reviews[review]),
-});
-
-export default connect(mapStateToProps)(Reviews);
+export default connect()(Reviews);
