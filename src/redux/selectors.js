@@ -7,6 +7,8 @@ const reviewsSelector = (state) => state.reviews;
 const usersSelector = (state) => state.users;
 
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
+export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
+export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
