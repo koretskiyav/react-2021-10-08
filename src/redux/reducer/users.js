@@ -9,9 +9,9 @@ import {
 import { arrToMap } from '../utils';
 
 const initialState = {
+  entities: {},
   loading: false,
   loaded: false,
-  entities: {},
   error: null,
 };
 
@@ -26,7 +26,7 @@ export default produce((draft = initialState, action) => {
       break;
 
     case LOAD_USERS + SUCCESS:
-      draft.entities = arrToMap(data);
+      draft.entities = { ...draft.entities, ...arrToMap(data) };
       draft.loading = false;
       draft.loaded = true;
       break;
@@ -37,7 +37,7 @@ export default produce((draft = initialState, action) => {
       break;
     case ADD_REVIEW:
       const { name } = review;
-      draft[userId] = { id: userId, name };
+      draft.entities[userId] = { id: userId, name };
       break;
 
     default:

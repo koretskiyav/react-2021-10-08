@@ -6,13 +6,19 @@ import {
   LOAD_RESTAURANTS,
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
+  LOAD_USERS,
   CHANGE_RESTAURANT,
   REQUEST,
   SUCCESS,
   FAILURE,
 } from './constants';
 
-import { reviewsLoadingSelector, reviewsLoadedSelector } from './selectors';
+import {
+  reviewsLoadingSelector,
+  reviewsLoadedSelector,
+  usersLoadingSelector,
+  usersLoadedSelector,
+} from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
 export const decrement = (id) => ({ type: DECREMENT, id });
@@ -57,5 +63,21 @@ export const loadReviews = (restId) => async (dispatch, getState) => {
     dispatch({ type: LOAD_REVIEWS + SUCCESS, restId, data });
   } catch (error) {
     dispatch({ type: LOAD_REVIEWS + FAILURE, restId, error });
+  }
+};
+export const loadUsers = () => async (dispatch, getState) => {
+  const state = getState();
+  const loading = usersLoadingSelector(state);
+  const loaded = usersLoadedSelector(state);
+
+  // if (loading || loaded) return;
+
+  dispatch({ type: LOAD_USERS + REQUEST });
+
+  try {
+    const data = await fetch('/api/users').then((res) => res.json());
+    dispatch({ type: LOAD_USERS + SUCCESS, data });
+  } catch (error) {
+    dispatch({ type: LOAD_USERS + FAILURE, error });
   }
 };
