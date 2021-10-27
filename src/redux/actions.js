@@ -5,12 +5,14 @@ import {
   ADD_REVIEW,
   LOAD_RESTAURANTS,
   LOAD_PRODUCTS,
+  LOAD_REVIEWS,
   CHANGE_RESTAURANT,
   REQUEST,
   SUCCESS,
   FAILURE,
-  LOAD_REVIEWS,
 } from './constants';
+
+import { reviewsLoadingSelector, reviewsLoadedSelector } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
 export const decrement = (id) => ({ type: DECREMENT, id });
@@ -39,7 +41,13 @@ export const loadProducts = (restId) => ({
   restId,
 });
 
-export const loadReviews = (restId) => async (dispatch) => {
+export const loadReviews = (restId) => async (dispatch, getState) => {
+  const state = getState();
+  const loading = reviewsLoadingSelector(state, { restId });
+  const loaded = reviewsLoadedSelector(state, { restId });
+
+  if (loading || loaded) return;
+
   dispatch({ type: LOAD_REVIEWS + REQUEST, restId });
 
   try {

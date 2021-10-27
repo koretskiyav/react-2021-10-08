@@ -6,11 +6,15 @@ import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 
 import { loadReviews } from '../../redux/actions';
+import { reviewsLoadedSelector } from '../../redux/selectors';
+import Loader from '../loader';
 
-const Reviews = ({ reviews, restId, loadReviews }) => {
+const Reviews = ({ reviews, restId, loadReviews, reviewsLoaded }) => {
   useEffect(() => {
     loadReviews(restId);
   }, [restId, loadReviews]);
+
+  if (!reviewsLoaded) return <Loader />;
 
   return (
     <div className={styles.reviews}>
@@ -27,8 +31,10 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-const mapDispatchToProps = {
-  loadReviews,
-};
+const mapStateToProps = (state, props) => ({
+  reviewsLoaded: reviewsLoadedSelector(state, props),
+});
 
-export default connect(null, mapDispatchToProps)(Reviews);
+const mapDispatchToProps = { loadReviews };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews);
