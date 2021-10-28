@@ -4,11 +4,20 @@ import {
   LOAD_PRODUCTS,
   LOAD_RESTAURANTS,
   LOAD_REVIEWS,
+  LOAD_USERS,
   REQUEST,
   SUCCESS,
 } from '../constants';
 
-export default produce((draft = {}, action) => {
+const defaultState = {
+  users: {
+    loading: false,
+    loaded: false,
+    error: null,
+  },
+};
+
+export default produce((draft = defaultState, action) => {
   const { type, data, restId, error } = action;
   switch (type) {
     case LOAD_RESTAURANTS + SUCCESS:
@@ -70,6 +79,27 @@ export default produce((draft = {}, action) => {
       break;
     case LOAD_REVIEWS + FAILURE:
       draft.restaurants[restId].reviews = {
+        loading: false,
+        loaded: false,
+        error,
+      };
+      break;
+    case LOAD_USERS + REQUEST:
+      draft.users = {
+        loading: true,
+        loaded: false,
+        error: null,
+      };
+      break;
+    case LOAD_USERS + SUCCESS:
+      draft.users = {
+        loading: false,
+        loaded: true,
+        error: null,
+      };
+      break;
+    case LOAD_USERS + FAILURE:
+      draft.users = {
         loading: false,
         loaded: false,
         error,

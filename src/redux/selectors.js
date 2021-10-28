@@ -19,6 +19,10 @@ export const reviewsLoadingSelector = (state, { id }) =>
   dataLoadingStatusSelector(state).restaurants[id].reviews.loading;
 export const reviewsLoadedSelector = (state, { id }) =>
   dataLoadingStatusSelector(state).restaurants[id].reviews.loaded;
+export const usersLoadingSelector = (state) =>
+  dataLoadingStatusSelector(state).users.loading;
+export const usersLoadedSelector = (state) =>
+  dataLoadingStatusSelector(state).users.loaded;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
