@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
@@ -33,21 +33,17 @@ const Restaurant = ({
     if (!reviwesLoading && !reviewsLoaded) loadReviews(id);
   }, [id, loadReviews, reviwesLoading, reviewsLoaded]);
 
-  const rateComponent = reviwesLoading ? (
-    <Loader />
-  ) : !reviewsLoaded ? (
-    <Rate value={0} />
-  ) : (
-    <Rate value={averageRating} />
-  );
+  const rateComponent = useMemo(() => {
+    if (reviwesLoading) return <Loader />;
+    if (!reviewsLoaded) return <Rate value={0} />;
+    return <Rate value={averageRating} />;
+  }, [reviwesLoading, reviewsLoaded, averageRating]);
 
-  const reviewsComponent = reviwesLoading ? (
-    <Loader />
-  ) : !reviewsLoaded ? (
-    <Reviews reviews={[]} restId={id} />
-  ) : (
-    <Reviews reviews={reviews} restId={id} />
-  );
+  const reviewsComponent = useMemo(() => {
+    if (reviwesLoading) return <Loader />;
+    if (!reviewsLoaded) return <Reviews reviews={[]} restId={id} />;
+    return <Reviews reviews={reviews} restId={id} />;
+  }, [reviwesLoading, reviewsLoaded, id, reviews]);
 
   return (
     <div>
