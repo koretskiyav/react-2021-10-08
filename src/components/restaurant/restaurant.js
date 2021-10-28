@@ -41,12 +41,20 @@ const Restaurant = ({
     <Rate value={averageRating} />
   );
 
+  const reviewsComponent = reviwesLoading ? (
+    <Loader />
+  ) : !reviewsLoaded ? (
+    <Reviews reviews={[]} restId={id} />
+  ) : (
+    <Reviews reviews={reviews} restId={id} />
+  );
+
   return (
     <div>
       <Banner heading={name}>{rateComponent}</Banner>
       <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
       {activeTab === 'menu' && <Menu menu={menu} restId={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} restId={id} />}
+      {activeTab === 'reviews' && reviewsComponent}
     </div>
   );
 };
