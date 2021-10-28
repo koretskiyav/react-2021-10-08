@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
@@ -9,9 +9,19 @@ import Tabs from '../tabs';
 import {
   averageRatingSelector,
   restaurantSelector,
+  reviewsLoadedSelector,
+  reviewsLoadingSelector,
 } from '../../redux/selectors';
+import Loader from '../loader';
+import { loadReviews } from '../../redux/actions';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({
+  restaurant,
+  averageRating,
+  reviewsLoading,
+  reviewsLoaded,
+  loadReviews,
+}) => {
   const { id, name, menu, reviews } = restaurant;
 
   const [activeTab, setActiveTab] = useState('menu');
@@ -21,14 +31,23 @@ const Restaurant = ({ restaurant, averageRating }) => {
     { id: 'reviews', label: 'Reviews' },
   ];
 
+  // Ревью нужны сразу, чтобы нарисовать рейтинг в беннере
+  // Ходить за рейтингом отдельно в баннере выглядит странно
+  useEffect(() => {
+    if (!reviewsLoading && !reviewsLoaded) loadReviews(id);
+  }, [id, reviewsLoading, reviewsLoaded, loadReviews]);
+
+  if (reviewsLoading !== false) return <Loader />;
+  if (!reviewsLoaded) return 'No data :(';
+
   return (
     <div>
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
       <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
-      {activeTab === 'menu' && <Menu menu={menu} key={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} restId={id} />}
+      {activeTab === 'menu' && <Menu menu={menu} key={id} id={id} />}
+      {activeTab === 'reviews' && <Reviews reviews={reviews} id={id} />}
     </div>
   );
 };
@@ -46,6 +65,12 @@ Restaurant.propTypes = {
 const mapStateToProps = (state, props) => ({
   restaurant: restaurantSelector(state, props),
   averageRating: averageRatingSelector(state, props),
+  reviewsLoading: reviewsLoadingSelector(state, props),
+  reviewsLoaded: reviewsLoadedSelector(state, props),
 });
 
-export default connect(mapStateToProps)(Restaurant);
+const mapDispatchToProps = (dispatch, props) => ({
+  loadReviews: () => dispatch(loadReviews(props.id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Restaurant);
