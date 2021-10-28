@@ -17,6 +17,7 @@ const Reviews = ({
   restId,
   loadReviews,
   reviewsLoaded,
+  loadUsers,
   usersLoaded,
 }) => {
   useEffect(() => {
@@ -24,7 +25,7 @@ const Reviews = ({
     loadReviews(restId);
   }, [loadUsers, loadReviews, restId]);
 
-  if (!usersLoaded || !reviewsLoaded) return <Loader />;
+  if (!reviewsLoaded) return <Loader />;
 
   return (
     <div className={styles.reviews}>

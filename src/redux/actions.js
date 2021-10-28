@@ -70,7 +70,7 @@ export const loadUsers = () => async (dispatch, getState) => {
   const loading = usersLoadingSelector(state);
   const loaded = usersLoadedSelector(state);
 
-  // if (loading || loaded) return;
+  if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS + REQUEST });
 
