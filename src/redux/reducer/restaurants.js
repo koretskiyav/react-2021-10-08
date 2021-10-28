@@ -5,6 +5,7 @@ import {
   FAILURE,
   LOAD_PRODUCTS,
   LOAD_RESTAURANTS,
+  LOAD_REVIEWS,
   REQUEST,
   SUCCESS,
 } from '../constants';
@@ -43,6 +44,10 @@ export default (state = initialState, action) => {
     case LOAD_PRODUCTS + SUCCESS:
       return produce(state, (draft) => {
         draft.entities[restId].menu = data.map((product) => product.id);
+      });
+    case LOAD_REVIEWS + SUCCESS:
+      return produce(state, (draft) => {
+        draft.entities[restId].reviews = data.map((review) => review.id);
       });
     case CHANGE_RESTAURANT:
       return { ...state, activeId };

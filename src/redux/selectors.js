@@ -13,9 +13,12 @@ export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
 export const productsLoadingSelector = (state, { restId }) =>
   dataLoadingStatusSelector(state).restaurants[restId].products.loading;
-
 export const productsLoadedSelector = (state, { restId }) =>
   dataLoadingStatusSelector(state).restaurants[restId].products.loaded;
+export const reviewsLoadingSelector = (state, { id }) =>
+  dataLoadingStatusSelector(state).restaurants[id].reviews.loading;
+export const reviewsLoadedSelector = (state, { id }) =>
+  dataLoadingStatusSelector(state).restaurants[id].reviews.loaded;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -60,7 +63,9 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   restaurantSelector,
   (reviews, restaurant) => {
-    const ratings = restaurant.reviews.map((id) => reviews[id].rating);
+    const ratings = restaurant.reviews.map((id) =>
+      !!reviews[id] ? reviews[id].rating : 0
+    );
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );

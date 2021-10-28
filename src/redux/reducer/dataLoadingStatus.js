@@ -3,6 +3,7 @@ import {
   FAILURE,
   LOAD_PRODUCTS,
   LOAD_RESTAURANTS,
+  LOAD_REVIEWS,
   REQUEST,
   SUCCESS,
 } from '../constants';
@@ -43,6 +44,7 @@ export default produce((draft = {}, action) => {
       draft.restaurants[restId].products = {
         loading: false,
         loaded: true,
+        error: null,
       };
       break;
     case LOAD_PRODUCTS + FAILURE:
@@ -52,7 +54,27 @@ export default produce((draft = {}, action) => {
         error,
       };
       break;
-
+    case LOAD_REVIEWS + REQUEST:
+      draft.restaurants[restId].reviews = {
+        loading: true,
+        loaded: false,
+        error: null,
+      };
+      break;
+    case LOAD_REVIEWS + SUCCESS:
+      draft.restaurants[restId].reviews = {
+        loading: false,
+        loaded: true,
+        error: null,
+      };
+      break;
+    case LOAD_REVIEWS + FAILURE:
+      draft.restaurants[restId].reviews = {
+        loading: false,
+        loaded: false,
+        error,
+      };
+      break;
     default:
       return draft;
   }
