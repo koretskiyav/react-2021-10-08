@@ -33,14 +33,17 @@ const Restaurant = ({
     if (!reviwesLoading && !reviewsLoaded) loadReviews(id);
   }, [id, loadReviews, reviwesLoading, reviewsLoaded]);
 
-  if (reviwesLoading) return <Loader />;
-  if (!reviewsLoaded) return 'No data :(';
+  const rateComponent = reviwesLoading ? (
+    <Loader />
+  ) : !reviewsLoaded ? (
+    <Rate value={0} />
+  ) : (
+    <Rate value={averageRating} />
+  );
 
   return (
     <div>
-      <Banner heading={name}>
-        <Rate value={averageRating} />
-      </Banner>
+      <Banner heading={name}>{rateComponent}</Banner>
       <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
       {activeTab === 'menu' && <Menu menu={menu} restId={id} />}
       {activeTab === 'reviews' && <Reviews reviews={reviews} restId={id} />}
