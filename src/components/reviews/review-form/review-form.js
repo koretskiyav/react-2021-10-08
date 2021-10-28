@@ -29,6 +29,7 @@ const ReviewForm = ({ onSubmit }) => {
             placeholder="Your name"
             className={styles.message}
             {...handlers.name}
+            required
           />
         </div>
         <div className={styles.reviewFormItem}>
@@ -36,6 +37,7 @@ const ReviewForm = ({ onSubmit }) => {
             placeholder="Your review"
             className={styles.message}
             {...handlers.text}
+            required
           />
         </div>
         <div className={styles.rateWrap}>
