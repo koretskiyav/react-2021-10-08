@@ -5,10 +5,17 @@ const productsSelector = (state) => state.products;
 const orderSelector = (state) => state.order;
 const reviewsSelector = (state) => state.reviews;
 const usersSelector = (state) => state.users;
+const dataLoadingStatusSelector = (state) => state.dataLoadingStatus;
 
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+
+export const productsLoadingSelector = (state, { restId }) =>
+  dataLoadingStatusSelector(state).restaurants[restId].products.loading;
+
+export const productsLoadedSelector = (state, { restId }) =>
+  dataLoadingStatusSelector(state).restaurants[restId].products.loaded;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,

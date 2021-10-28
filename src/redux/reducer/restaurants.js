@@ -3,6 +3,7 @@ import {
   ADD_REVIEW,
   CHANGE_RESTAURANT,
   FAILURE,
+  LOAD_PRODUCTS,
   LOAD_RESTAURANTS,
   REQUEST,
   SUCCESS,
@@ -38,6 +39,11 @@ export default (state = initialState, action) => {
         loaded: false,
         error,
       };
+
+    case LOAD_PRODUCTS + SUCCESS:
+      return produce(state, (draft) => {
+        draft.entities[restId].menu = data.map((product) => product.id);
+      });
     case CHANGE_RESTAURANT:
       return { ...state, activeId };
     case ADD_REVIEW:

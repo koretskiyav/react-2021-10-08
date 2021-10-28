@@ -6,6 +6,7 @@ export const CHANGE_RESTAURANT = 'CHANGE_RESTAURANT';
 
 export const LOAD_RESTAURANTS = 'LOAD_RESTAURANTS';
 export const LOAD_REVIEWS = 'LOAD_REVIEWS';
+export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
