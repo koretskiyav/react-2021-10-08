@@ -38,7 +38,7 @@ const Reviews = ({
   ]);
 
   if (loading || loadingUsers) return <Loader />;
-  if (!loaded && !loadedUsers) return 'No data :(';
+  if (!loaded || !loadedUsers) return 'No data :(';
 
   return (
     <div className={styles.reviews}>
@@ -56,7 +56,6 @@ Reviews.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  console.log(props);
   return {
     restId: props.restId,
     loadedUsers: reviewLoadedUsers(state),

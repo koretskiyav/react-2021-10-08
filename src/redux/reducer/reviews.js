@@ -36,7 +36,6 @@ export default produce((draft = initialState, action) => {
       return draft;
 
     case LOAD_REVIEWS + FAILURE:
-      console.log(action);
       draft.loaded[restId] = false;
       draft.loading[restId] = false;
       draft.error[restId] = error;

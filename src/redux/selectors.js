@@ -66,8 +66,6 @@ export const reviewWitUserSelector = createSelector(
   reviewSelector,
   usersSelector,
   (review, users) => {
-    console.log(review);
-    console.log(users);
     return {
       ...review,
       user: users[review.userId]?.name,
