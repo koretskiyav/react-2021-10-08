@@ -1,18 +1,52 @@
-import { ADD_REVIEW } from '../constants';
-import { normalizedReviews } from '../../fixtures';
+import {
+  ADD_REVIEW,
+  FAILURE,
+  LOAD_REVIEWS,
+  REQUEST,
+  SUCCESS,
+} from '../constants';
 import { arrToMap } from '../utils';
+import produce from 'immer';
 
-export default (state = arrToMap(normalizedReviews), action) => {
-  const { type, review, reviewId, userId } = action;
+const initialState = {
+  entities: {},
+  loaded: {},
+  loading: {},
+  error: {},
+};
+
+export default produce((draft = initialState, action) => {
+  const { type, data, error, restId, review, reviewId, userId } = action;
 
   switch (type) {
+    case LOAD_REVIEWS + REQUEST:
+      draft.loaded[restId] = false;
+      draft.loading[restId] = true;
+      draft.error[restId] = null;
+      return draft;
+
+    case LOAD_REVIEWS + SUCCESS:
+      draft.loaded[restId] = true;
+      draft.loading[restId] = false;
+      draft.error[restId] = null;
+      draft.entities = {
+        ...draft.entities,
+        ...arrToMap(data),
+      };
+      return draft;
+
+    case LOAD_REVIEWS + FAILURE:
+      draft.loaded[restId] = false;
+      draft.loading[restId] = false;
+      draft.error[restId] = error;
+      return draft;
+
     case ADD_REVIEW:
       const { text, rating } = review;
-      return {
-        ...state,
-        [reviewId]: { id: reviewId, userId, text, rating },
-      };
+      draft.entities[reviewId] = { rating, text, userId, reviewId };
+      return draft;
+
     default:
-      return state;
+      return draft;
   }
-};
+});

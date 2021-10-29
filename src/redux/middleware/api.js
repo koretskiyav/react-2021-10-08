@@ -6,7 +6,6 @@ export default (store) => (next) => async (action) => {
   const { CallAPI, type, ...rest } = action;
 
   next({ ...rest, type: type + REQUEST });
-
   try {
     const data = await fetch(CallAPI).then((res) => res.json());
     next({ ...rest, type: type + SUCCESS, data });
