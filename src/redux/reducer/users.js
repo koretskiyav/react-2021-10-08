@@ -22,7 +22,6 @@ export default produce((draft = initialState, action) => {
     case LOAD_USERS + REQUEST:
       return { ...draft, loading: true, error: null };
     case LOAD_USERS + SUCCESS: {
-      debugger;
       return {
         ...draft,
         entities: arrToMap(data),
@@ -40,7 +39,7 @@ export default produce((draft = initialState, action) => {
       };
     case ADD_REVIEW:
       const { name } = review;
-      draft[userId] = { id: userId, name };
+      draft.entities[userId] = { id: userId, name };
       break;
 
     default:
