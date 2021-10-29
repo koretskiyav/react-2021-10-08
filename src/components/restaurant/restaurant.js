@@ -31,7 +31,7 @@ const Restaurant = ({
   ];
 
   useEffect(() => {
-    if (!loading) loadReviews(id);
+    if (!loading) loadReviews(id); // eslint-disable-next-line
   }, [id]);
 
   return (
