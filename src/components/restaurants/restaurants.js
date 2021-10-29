@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Restaurant from '../restaurant';
+import Restaurant from './restaurant';
 import Loader from '../loader';
 import {
   restaurantsListSelector,
@@ -37,7 +37,13 @@ function Restaurants({ restaurants, loading, loaded, loadRestaurants }) {
       </div>
       <Switch>
         <Route path="/restaurants/:restId">
-          {({ match }) => <Restaurant id={match.params.restId} />}
+          {({ match }) =>
+            restaurants.find(({ id }) => id === match.params.restId) ? (
+              <Restaurant id={match.params.restId} />
+            ) : (
+              <h2>404 Not found</h2>
+            )
+          }
         </Route>
         <Redirect to={`/restaurants/${restaurants[0]?.id}`} />
       </Switch>

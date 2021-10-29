@@ -1,16 +1,22 @@
+import produce from 'immer';
 import { DECREMENT, INCREMENT, REMOVE } from '../constants';
 
 // { [productId]: amount }
-export default function (state = {}, action) {
-  const { type, id } = action;
+export default produce((draft = {}, action) => {
+  const { type, id, restId } = action;
   switch (type) {
     case INCREMENT:
-      return { ...state, [id]: (state[id] || 0) + 1 };
+      draft[id] = { amount: (draft[id]?.amount || 0) + 1, restId };
+      break;
     case DECREMENT:
-      return { ...state, [id]: state[id] > 0 ? (state[id] || 0) - 1 : 0 };
+      draft[id] = {
+        amount: draft[id]?.amount > 0 ? (draft[id]?.amount || 0) - 1 : 0,
+      };
+      break;
     case REMOVE:
-      return { ...state, [id]: 0 };
+      draft[id] = { amount: 0 };
+      break;
     default:
-      return state;
+      return draft;
   }
-}
+});
