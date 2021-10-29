@@ -9,6 +9,7 @@ import {
   SUCCESS,
   FAILURE,
   LOAD_REVIEWS,
+  LOAD_PRODUCTS,
 } from './constants';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -25,6 +26,12 @@ export const addReview = (review, restId) => ({
   review,
   restId,
   generateId: ['reviewId', 'userId'],
+});
+
+export const loadProducts = (restId) => ({
+  type: LOAD_PRODUCTS,
+  CallAPI: `/api/products?id=${restId}`,
+  restId: restId,
 });
 
 export const loadRestaurants = () => ({
