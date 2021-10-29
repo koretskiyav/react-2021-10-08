@@ -13,6 +13,7 @@ const Rate = ({ value, onChange }) => (
         data-id={i <= value - 1 ? 'full-star' : 'empty-star'}
         className={cn(styles.star, {
           [styles.checked]: i <= value - 1,
+          [styles.unknown]: value === 0,
           [styles.clickable]: !!onChange,
         })}
         onClick={onChange ? () => onChange(i + 1) : undefined}
