@@ -5,6 +5,13 @@ import Product from '../product';
 import Basket from '../basket';
 
 import styles from './menu.module.css';
+import { connect } from 'react-redux';
+import { loadProducts } from '../../redux/actions';
+import {
+  productLoadedSelector,
+  productLoadingSelector,
+} from '../../redux/selectors';
+import Loader from '../loader';
 
 class Menu extends Component {
   static propTypes = {
@@ -13,11 +20,19 @@ class Menu extends Component {
 
   state = { error: null };
 
+  componentDidMount() {
+    if (!this.props.loading && !this.props.loaded)
+      this.props.loadProductList(this.props.restId);
+  }
+
   componentDidCatch(error) {
     this.setState({ error });
   }
 
   render() {
+    if (this.props.loading) return <Loader />;
+    if (!this.props.loaded) return 'No data :(';
+
     const { menu } = this.props;
 
     if (this.state.error) {
@@ -39,4 +54,14 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+const mapStateToProps = (state, props) => ({
+  loading: productLoadingSelector(state, props),
+  loaded: productLoadedSelector(state, props),
+  restId: props.restId,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadProductList: (restId) => dispatch(loadProducts(restId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
