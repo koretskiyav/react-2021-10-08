@@ -46,6 +46,8 @@ export const loadProducts = (restId) => ({
   restId,
 });
 
+const _loadUsers = () => ({ type: LOAD_USERS, CallAPI: '/api/users' });
+
 export const loadReviews = (restId) => async (dispatch, getState) => {
   const state = getState();
   const loading = reviewsLoadingSelector(state, { restId });
@@ -71,12 +73,5 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   if (loading || loaded) return;
 
-  dispatch({ type: LOAD_USERS + REQUEST });
-
-  try {
-    const data = await fetch('/api/users').then((res) => res.json());
-    dispatch({ type: LOAD_USERS + SUCCESS, data });
-  } catch (error) {
-    dispatch({ type: LOAD_USERS + FAILURE, error });
-  }
+  dispatch(_loadUsers());
 };
