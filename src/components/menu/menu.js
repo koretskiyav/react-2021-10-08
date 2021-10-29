@@ -1,5 +1,14 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { loadProducts } from '../../redux/actions';
+import {
+  productsLoadingSelector,
+  productsLoadedSelector,
+} from '../../redux/selectors';
+
+import Loader from '../loader';
 
 import Product from '../product';
 import Basket from '../basket';
@@ -13,14 +22,34 @@ class Menu extends Component {
 
   state = { error: null };
 
+  loadProductsIfNeed = () => {
+    const { loadProducts, restId, loading, loaded } = this.props;
+    if (!loading && !loaded) {
+      loadProducts(restId);
+    }
+  };
+
+  componentDidMount() {
+    this.loadProductsIfNeed();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.restId !== this.props.restId) {
+      this.loadProductsIfNeed();
+    }
+  }
+
   componentDidCatch(error) {
     this.setState({ error });
   }
 
   render() {
-    const { menu } = this.props;
+    const { menu, loading, loaded } = this.props;
 
-    if (this.state.error) {
+    if (loading) return <Loader />;
+    if (!loaded) return 'No data :(';
+
+    if (this.state.error || !loaded) {
       return <p>Меню этого ресторана сейчас недоступно :(</p>;
     }
 
@@ -39,4 +68,11 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+const mapStateToProps = (state, props) => ({
+  loading: productsLoadingSelector(state, props),
+  loaded: productsLoadedSelector(state, props),
+});
+
+const mapDispatchToProps = { loadProducts };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
