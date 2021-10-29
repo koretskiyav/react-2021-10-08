@@ -9,7 +9,25 @@ import {
   SUCCESS,
   FAILURE,
   LOAD_REVIEWS,
+  LOAD_PRODUCTS,
+  LOAD_USERS,
 } from './constants';
+
+const loadedItems = {};
+
+const load = async ({ url, eventName, dispatch, ...rest }) => {
+  if (loadedItems[url]) return;
+
+  dispatch({ type: eventName + REQUEST, ...rest });
+
+  try {
+    const data = await fetch(url).then((res) => res.json());
+    dispatch({ type: eventName + SUCCESS, data, ...rest });
+    loadedItems[url] = true;
+  } catch (error) {
+    dispatch({ type: eventName + FAILURE, error, ...rest });
+  }
+};
 
 export const increment = (id) => ({ type: INCREMENT, id });
 export const decrement = (id) => ({ type: DECREMENT, id });
@@ -32,15 +50,24 @@ export const loadRestaurants = () => ({
   CallAPI: '/api/restaurants',
 });
 
-export const loadReviews = (restId) => async (dispatch) => {
-  dispatch({ type: LOAD_REVIEWS + REQUEST, restId });
+export const loadProducts = (id) => ({
+  type: LOAD_PRODUCTS,
+  CallAPI: `/api/products?id=${id}`,
+});
 
-  try {
-    const data = await fetch(`/api/reviews?id=${restId}`).then((res) =>
-      res.json()
-    );
-    dispatch({ type: LOAD_REVIEWS + SUCCESS, restId, data });
-  } catch (error) {
-    dispatch({ type: LOAD_REVIEWS + FAILURE, restId, error });
-  }
+export const loadReviews = (restId) => async (dispatch) => {
+  await load({
+    url: `/api/reviews?id=${restId}`,
+    eventName: LOAD_REVIEWS,
+    dispatch,
+    restId,
+  });
+};
+
+export const loadUsers = () => async (dispatch) => {
+  await load({
+    url: '/api/users',
+    eventName: LOAD_USERS,
+    dispatch,
+  });
 };

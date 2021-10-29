@@ -56,6 +56,12 @@ Product.propTypes = {
   decrement: PropTypes.func,
 };
 
+Product.defaultProps = {
+  product: {
+    ingredients: [],
+  },
+};
+
 const mapStateToProps = (state, props) => ({
   amount: amountSelector(state, props),
   product: productSelector(state, props),
