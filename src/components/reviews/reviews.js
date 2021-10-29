@@ -4,13 +4,21 @@ import PropTypes from 'prop-types';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
+import Loader from '../loader';
+import {
+  usersLoadingSelector,
+  usersLoadedSelector,
+} from '../../redux/selectors';
 
-import { loadReviews } from '../../redux/actions';
+import { loadUsers } from '../../redux/actions';
 
-const Reviews = ({ reviews, restId, loadReviews }) => {
+const Reviews = ({ reviews, restId, loadUsers, usersLoading, usersLoaded }) => {
   useEffect(() => {
-    loadReviews(restId);
-  }, [restId, loadReviews]);
+    if (!usersLoading && !usersLoaded) loadUsers();
+  }, [loadUsers, usersLoading, usersLoaded]);
+
+  if (usersLoading) return <Loader />;
+  if (!usersLoaded) return 'No data :(';
 
   return (
     <div className={styles.reviews}>
@@ -27,8 +35,13 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
+const mapStateToProps = (state, props) => ({
+  usersLoading: usersLoadingSelector(state),
+  usersLoaded: usersLoadedSelector(state),
+});
+
 const mapDispatchToProps = {
-  loadReviews,
+  loadUsers,
 };
 
-export default connect(null, mapDispatchToProps)(Reviews);
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews);
