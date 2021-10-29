@@ -5,18 +5,41 @@ import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 
-import { loadReviews } from '../../redux/actions';
+import Loader from '../loader';
 
-const Reviews = ({ reviews, restId, loadReviews }) => {
+import { loadUsers } from '../../redux/actions';
+import {
+  reviewsLoadedSelector,
+  reviewsLoadingSelector,
+  usersLoadedSelector,
+  usersLoadingSelector,
+} from '../../redux/selectors';
+
+const Reviews = ({
+  reviews,
+  restId,
+  loadUsers,
+  usersLoading,
+  usersLoaded,
+  reviewsLoading,
+  reviewsLoaded,
+}) => {
   useEffect(() => {
-    loadReviews(restId);
-  }, [restId, loadReviews]);
+    if (!usersLoading && !usersLoaded) loadUsers();
+  }, [usersLoading, usersLoaded, loadUsers]);
+
+  const reviewsEls =
+    reviewsLoading || usersLoading ? (
+      <Loader />
+    ) : !reviewsLoaded || !usersLoaded ? (
+      'no data :('
+    ) : (
+      reviews.map((id) => <Review key={id} id={id} />)
+    );
 
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
-        <Review key={id} id={id} />
-      ))}
+      {reviewsEls}
       <ReviewForm restId={restId} />
     </div>
   );
@@ -25,10 +48,22 @@ const Reviews = ({ reviews, restId, loadReviews }) => {
 Reviews.propTypes = {
   restId: PropTypes.string,
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  loadUsers: PropTypes.func.isRequired,
+  usersLoading: PropTypes.bool,
+  usersLoaded: PropTypes.bool,
+  reviewsLoading: PropTypes.bool,
+  reviewsLoaded: PropTypes.bool,
 };
+
+const mapStateToProps = (state) => ({
+  usersLoading: usersLoadingSelector(state),
+  usersLoaded: usersLoadedSelector(state),
+  reviewsLoading: reviewsLoadingSelector(state),
+  reviewsLoaded: reviewsLoadedSelector(state),
+});
 
 const mapDispatchToProps = {
-  loadReviews,
+  loadUsers,
 };
 
-export default connect(null, mapDispatchToProps)(Reviews);
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews);

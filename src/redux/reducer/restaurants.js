@@ -7,14 +7,11 @@ import {
   REQUEST,
   SUCCESS,
 } from '../constants';
-import { arrToMap } from '../utils';
+import { arrToMap, getInitialState } from '../utils';
 
 const initialState = {
+  ...getInitialState(),
   activeId: null,
-  loading: false,
-  loaded: false,
-  entities: {},
-  error: null,
 };
 
 export default (state = initialState, action) => {

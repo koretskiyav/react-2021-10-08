@@ -32,6 +32,7 @@ Review.propTypes = {
 
 Review.defaultProps = {
   user: 'Anonymous',
+  rating: 0,
 };
 
 // const mapStateToProps = (state, props) => ({
