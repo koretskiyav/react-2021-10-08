@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Loader from '../loader';
@@ -13,15 +13,13 @@ import { loadRestaurants } from '../../redux/actions';
 
 import styles from './restaurants.module.css';
 
-function Restaurants({ restaurants, loading, loaded, loadRestaurants, match }) {
+function Restaurants({ restaurants, loading, loaded, loadRestaurants }) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
 
   if (loading) return <Loader />;
   if (!loaded) return 'No data :(';
-
-  const { restId } = match.params;
 
   return (
     <div>
@@ -37,7 +35,12 @@ function Restaurants({ restaurants, loading, loaded, loadRestaurants, match }) {
           </NavLink>
         ))}
       </div>
-      <Restaurant id={restId} />
+      <Switch>
+        <Route path="/restaurants/:restId">
+          {({ match }) => <Restaurant id={match.params.restId} />}
+        </Route>
+        <Redirect to={`/restaurants/${restaurants[0]?.id}`} />
+      </Switch>
     </div>
   );
 }
