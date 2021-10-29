@@ -55,6 +55,7 @@ const ReviewForm = ({ onSubmit }) => {
 };
 
 ReviewForm.propTypes = {
+  restId: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
