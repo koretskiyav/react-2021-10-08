@@ -1,0 +1,19 @@
+.rtabs {
+  height: auto;
+  text-align: center;
+  padding: 12px;
+  background-color: var(--grey);
+}
+
+.rtabs span {
+  cursor: pointer;
+}
+
+.rtab {
+  padding: 4px 12px;
+  color: var(--black);
+}
+
+.rtab.active {
+  border-bottom: 1px solid var(--black);
+}

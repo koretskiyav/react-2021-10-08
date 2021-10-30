@@ -61,7 +61,7 @@ class Menu extends Component {
           ))}
         </div>
         <div>
-          <Basket />
+          <Basket restId={this.props.restId} />
         </div>
       </div>
     );
