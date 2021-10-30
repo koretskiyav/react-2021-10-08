@@ -6,6 +6,7 @@ const orderSelector = (state) => state.order;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
+export const allRestaurantsSelector = restaurantsSelector;
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;

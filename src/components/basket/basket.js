@@ -7,7 +7,7 @@ import BasketItem from './basket-item';
 import Button from '../button';
 import { orderProductsSelector, totalSelector } from '../../redux/selectors';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({ restId, title = 'Basket', total, orderProducts }) {
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -21,6 +21,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <h4 className={styles.title}>{title}</h4>
       {orderProducts.map(({ product, amount, subtotal }) => (
         <BasketItem
+          restId={restId}
           product={product}
           amount={amount}
           key={product.id}
