@@ -20,7 +20,7 @@ import {
   reviewsLoadedSelector,
 } from './selectors';
 
-export const increment = (id) => ({ type: INCREMENT, id });
+export const increment = (id, restId) => ({ type: INCREMENT, id });
 export const decrement = (id) => ({ type: DECREMENT, id });
 export const remove = (id) => ({ type: REMOVE, id });
 
@@ -40,6 +40,7 @@ export const loadRestaurants = () => ({
   type: LOAD_RESTAURANTS,
   CallAPI: '/api/restaurants',
 });
+
 export const loadProducts = (restId) => ({
   type: LOAD_PRODUCTS,
   CallAPI: `/api/products?id=${restId}`,

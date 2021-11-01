@@ -28,6 +28,7 @@ const ReviewForm = ({ onSubmit }) => {
           <input
             placeholder="Your name"
             className={styles.message}
+            required
             {...handlers.name}
           />
         </div>
@@ -35,6 +36,7 @@ const ReviewForm = ({ onSubmit }) => {
           <textarea
             placeholder="Your review"
             className={styles.message}
+            required
             {...handlers.text}
           />
         </div>

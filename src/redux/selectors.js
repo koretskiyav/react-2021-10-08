@@ -72,3 +72,9 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const menuSelector = (state, { restId }) =>
+  restaurantSelector(state, { id: restId }).menu;
+
+export const restaurantIdByProductSelector = (state, { id }) =>
+  state.products.toRestaurantMap[id];
