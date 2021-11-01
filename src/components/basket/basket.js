@@ -5,7 +5,11 @@ import styles from './basket.module.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  totalSelector,
+  activeIdRestaurantSelector,
+} from '../../redux/selectors';
 
 function Basket({ title = 'Basket', total, orderProducts, restId }) {
   if (!total) {
@@ -50,6 +54,7 @@ const mapStateToProps = (state) => {
   return {
     total: totalSelector(state),
     orderProducts: orderProductsSelector(state),
+    restId: activeIdRestaurantSelector(state),
   };
 };
 
