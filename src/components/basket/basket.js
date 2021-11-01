@@ -54,8 +54,11 @@ const mapStateToProps = (state) => {
   return {
     total: totalSelector(state),
     orderProducts: orderProductsSelector(state),
-    restId: activeIdRestaurantSelector(state),
   };
 };
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = (dispatch, props) => ({
+  restId: activeIdRestaurantSelector(props.restId),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);
