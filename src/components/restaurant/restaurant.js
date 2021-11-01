@@ -1,20 +1,19 @@
-import { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
 import {
   averageRatingSelector,
   restaurantSelector,
 } from '../../redux/selectors';
 
-const Restaurant = ({ restaurant, averageRating }) => {
-  const { id, name, menu, reviews } = restaurant;
+import styles from './restaurant.module.css';
 
-  const [activeTab, setActiveTab] = useState('menu');
+const Restaurant = ({ restaurant, averageRating }) => {
+  const { id: restaurantId, name, menu, reviews } = restaurant;
 
   const tabs = [
     { id: 'menu', label: 'Menu' },
@@ -26,9 +25,34 @@ const Restaurant = ({ restaurant, averageRating }) => {
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
-      <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
-      {activeTab === 'menu' && <Menu menu={menu} key={id} restId={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} restId={id} />}
+      <div className={styles.tabs}>
+        {tabs.map(({ id, label }) => (
+          <NavLink
+            key={id}
+            to={`/restaurants/${restaurantId}/${id}`}
+            className={styles.tab}
+            activeClassName={styles.active}
+          >
+            {label}
+          </NavLink>
+        ))}
+      </div>
+      <Switch>
+        <Route path="/restaurants/:restId/:activeTab">
+          {({ match }) => {
+            switch (match.params.activeTab) {
+              case 'menu':
+                return <Menu menu={menu} key={restaurantId} restId={restaurantId} />;
+              case 'reviews':
+                return <Reviews reviews={reviews} restId={restaurantId} />;
+              default:
+                return null;
+            }
+          }}
+        </Route>
+        <Redirect to={`/restaurants/${restaurantId}/${tabs[0]?.id}`} />
+      </Switch>
+
     </div>
   );
 };
