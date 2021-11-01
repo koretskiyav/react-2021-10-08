@@ -5,7 +5,7 @@ import Button from '../button';
 import { decrement, increment } from '../../redux/actions';
 import { amountSelector, productSelector } from '../../redux/selectors';
 
-function Product({ product, restId, amount, decrement, increment }) {
+function Product({ product, amount, decrement, increment }) {
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>

@@ -6,6 +6,7 @@ const initialState = {
   entities: {},
   loading: {},
   loaded: {},
+  toRestaurantMap: {},
   error: null,
 };
 
@@ -23,6 +24,9 @@ export default (state = initialState, action) =>
         draft.loaded[restId] = true;
         draft.error = null;
         Object.assign(draft.entities, arrToMap(data));
+        data.forEach((product) => {
+          draft.toRestaurantMap[product.id] = restId;
+        });
         break;
       }
       case LOAD_PRODUCTS + FAILURE: {

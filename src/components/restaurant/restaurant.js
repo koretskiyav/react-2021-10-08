@@ -15,7 +15,7 @@ import {
 import styles from './restaurant.module.css';
 
 const Restaurant = ({ restaurant, averageRating }) => {
-  const { id, name, menu, reviews } = restaurant;
+  const { name, reviews } = restaurant;
 
   const [activeTab, setActiveTab] = useState('menu');
 
@@ -42,9 +42,13 @@ const Restaurant = ({ restaurant, averageRating }) => {
         ))}
       </div>
       <Switch>
-        <Route path="/restaurants/:restId/menu">
-          {({ match }) => <Menu menu={menu} key={id} restId={id} />}
-        </Route>
+        <Route
+          path="/restaurants/:restId/menu"
+          component={({ match }) => {
+            const restId = match.params.restId;
+            return <Menu key={restId} restId={restId} />;
+          }}
+        />
         <Route path="/restaurants/:restId/reviews">
           {({ match }) => <Reviews reviews={reviews} restId={restaurant.id} />}
         </Route>

@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { increment, decrement, remove } from '../../../redux/actions';
 import Button from '../../button';
 import styles from './basket-item.module.css';
+import { restaurantIdByProductSelector } from '../../../redux/selectors';
 
 function BasketItem({
   product,
@@ -13,11 +14,14 @@ function BasketItem({
   increment,
   decrement,
   remove,
+  restaurantIdByProduct,
 }) {
   return (
     <div className={styles.basketItem}>
       <div className={styles.name}>
-        <Link to={`/restaurants/${restId}`}>{product.name}</Link>
+        <Link to={`/restaurants/${restaurantIdByProduct}`}>
+          <span>{product.name}</span>
+        </Link>
       </div>
       <div className={styles.info}>
         <div className={styles.counter}>
@@ -32,10 +36,16 @@ function BasketItem({
   );
 }
 
+const mapStateToProps = (state, props) => {
+  return {
+    restaurantIdByProduct: restaurantIdByProductSelector(state, props.product),
+  };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  increment: () => dispatch(increment(ownProps.product.id, ownProps.restId)),
+  increment: () => dispatch(increment(ownProps.product.id)),
   decrement: () => dispatch(decrement(ownProps.product.id)),
   remove: () => dispatch(remove(ownProps.product.id)),
 });
 
-export default connect(null, mapDispatchToProps)(BasketItem);
+export default connect(mapStateToProps, mapDispatchToProps)(BasketItem);

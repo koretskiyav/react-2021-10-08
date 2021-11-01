@@ -5,13 +5,9 @@ import styles from './basket.module.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import {
-  orderProductsSelector,
-  totalSelector,
-  activeIdRestaurantSelector,
-} from '../../redux/selectors';
+import { orderProductsSelector, totalSelector } from '../../redux/selectors';
 
-function Basket({ title = 'Basket', total, orderProducts, restId }) {
+function Basket({ title = 'Basket', total, orderProducts }) {
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -28,7 +24,6 @@ function Basket({ title = 'Basket', total, orderProducts, restId }) {
           product={product}
           amount={amount}
           key={product.id}
-          restId={restId}
           subtotal={subtotal}
         />
       ))}
@@ -57,8 +52,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, props) => ({
-  restId: activeIdRestaurantSelector(props.restId),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Basket);
+export default connect(mapStateToProps)(Basket);
