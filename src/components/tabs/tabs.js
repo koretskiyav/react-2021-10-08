@@ -1,33 +1,30 @@
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import styles from './tabs.module.css';
+import { Link } from 'react-router-dom';
 
-function Tabs({ tabs, activeId, onChange }) {
+function Tabs({ match }) {
+  const restId = match.params.restId;
+  const activeId = match.params.activeId;
+
+  const tabs = [
+    { id: 'menu', label: 'Menu' },
+    { id: 'reviews', label: 'Reviews' },
+  ];
+
   return (
     <div className={styles.tabs}>
       {tabs.map(({ id, label }) => (
-        <span
-          key={id}
-          className={cn(styles.tab, { [styles.active]: id === activeId })}
-          onClick={() => onChange(id)}
-        >
-          {label}
-        </span>
+        <Link to={`/restaurants/${restId}/${id}`} key={id}>
+          <span
+            className={cn(styles.tab, { [styles.active]: id === activeId })}
+          >
+            {label}
+          </span>
+        </Link>
       ))}
     </div>
   );
 }
-
-Tabs.propTypes = {
-  tabs: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string,
-    }).isRequired
-  ).isRequired,
-  activeId: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default Tabs;

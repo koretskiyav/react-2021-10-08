@@ -46,6 +46,11 @@ export const orderProductsSelector = createSelector(
         subtotal: order[product.id] * product.price,
       }))
 );
+export const menuSelector = (state, { restId }) =>
+  restaurantSelector(state, { id: restId }).menu;
+
+export const restaurantIdByProductSelector = (state, { id }) =>
+  state.products.toRestaurantMap[id];
 
 export const totalSelector = createSelector(
   [orderProductsSelector],

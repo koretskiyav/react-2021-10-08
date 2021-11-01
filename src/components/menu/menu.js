@@ -6,6 +6,7 @@ import { loadProducts } from '../../redux/actions';
 import {
   productsLoadingSelector,
   productsLoadedSelector,
+  menuSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
@@ -71,6 +72,7 @@ class Menu extends Component {
 const mapStateToProps = (state, props) => ({
   loading: productsLoadingSelector(state, props),
   loaded: productsLoadedSelector(state, props),
+  menu: menuSelector(state, props),
 });
 
 const mapDispatchToProps = { loadProducts };
