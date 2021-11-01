@@ -12,6 +12,9 @@ const initialState = {
 export default (state = initialState, action) =>
   produce(state, (draft) => {
     const { type, restId, data, error } = action;
+    const dataWithRestId = data?.map(el => {
+      return {...el, restId};
+    })
 
     switch (type) {
       case LOAD_PRODUCTS + REQUEST: {
@@ -22,7 +25,7 @@ export default (state = initialState, action) =>
         draft.loading[restId] = false;
         draft.loaded[restId] = true;
         draft.error = null;
-        Object.assign(draft.entities, arrToMap(data));
+        Object.assign(draft.entities, arrToMap(dataWithRestId));
         break;
       }
       case LOAD_PRODUCTS + FAILURE: {
