@@ -5,7 +5,7 @@ import Button from '../button';
 import { decrement, increment } from '../../redux/actions';
 import { amountSelector, productSelector } from '../../redux/selectors';
 
-function Product({ product, amount, decrement, increment }) {
+function Product({ product, restId, amount, decrement, increment }) {
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
@@ -57,7 +57,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  increment: () => dispatch(increment(props.id)),
+  increment: () => dispatch(increment(props.id, props.restId)),
   decrement: () => dispatch(decrement(props.id)),
 });
 

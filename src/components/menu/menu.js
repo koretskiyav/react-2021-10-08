@@ -57,11 +57,11 @@ class Menu extends Component {
       <div className={styles.menu}>
         <div>
           {menu.map((id) => (
-            <Product key={id} id={id} />
+            <Product key={id} id={id} restId={this.props.restId} />
           ))}
         </div>
         <div>
-          <Basket />
+          <Basket restId={this.props.restId} />
         </div>
       </div>
     );
