@@ -43,7 +43,7 @@ class Menu extends Component {
   }
 
   render() {
-    const { menu, loading, loaded } = this.props;
+    const { menu, loading, loaded, restId } = this.props;
 
     if (loading) {
       return <Loader />;
@@ -57,7 +57,7 @@ class Menu extends Component {
       <div className={styles.menu}>
         <div>
           {menu.map((id) => (
-            <Product key={id} id={id} />
+            <Product key={id} id={id} restId={restId} />
           ))}
         </div>
         <div>

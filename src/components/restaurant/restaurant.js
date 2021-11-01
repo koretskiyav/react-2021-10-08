@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -11,14 +11,12 @@ import {
   restaurantSelector,
 } from '../../redux/selectors';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({ restaurant, averageRating, activeTab }) => {
   const { id, name, menu, reviews } = restaurant;
 
-  const [activeTab, setActiveTab] = useState('menu');
-
   const tabs = [
-    { id: 'menu', label: 'Menu' },
-    { id: 'reviews', label: 'Reviews' },
+    { id: 'menu', label: 'Menu', route: `/restaurants/${id}/menu` },
+    { id: 'reviews', label: 'Reviews', route: `/restaurants/${id}/reviews` },
   ];
 
   return (
@@ -26,7 +24,8 @@ const Restaurant = ({ restaurant, averageRating }) => {
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
-      <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
+
+      <Tabs tabs={tabs} activeId={activeTab} />
       {activeTab === 'menu' && <Menu menu={menu} key={id} restId={id} />}
       {activeTab === 'reviews' && <Reviews reviews={reviews} restId={id} />}
     </div>
@@ -41,6 +40,7 @@ Restaurant.propTypes = {
     reviews: PropTypes.array,
   }).isRequired,
   averageRating: PropTypes.number,
+  activeTab: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
