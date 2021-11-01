@@ -44,6 +44,7 @@ Product.propTypes = {
     price: PropTypes.number,
     ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   }).isRequired,
+  restId: PropTypes.string.isRequired,
 
   // from connect
   amount: PropTypes.number,
@@ -57,8 +58,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  increment: () => dispatch(increment(props.id)),
-  decrement: () => dispatch(decrement(props.id)),
+  increment: () => dispatch(increment(props.id, props.restId)),
+  decrement: () => dispatch(decrement(props.id, props.restId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
