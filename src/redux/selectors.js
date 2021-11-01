@@ -5,6 +5,7 @@ const productsSelector = (state) => state.products.entities;
 const orderSelector = (state) => state.order;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
+const sessionParamSelector = (state) => state.sessionParam;
 
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
@@ -72,3 +73,6 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const activeTabSelector = (state) =>
+  sessionParamSelector(state).restaurantActiveTab;

@@ -11,6 +11,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  CHANGE_RESTAURANT_TAB,
 } from './constants';
 
 import {
@@ -18,6 +19,7 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  activeTabSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -74,4 +76,16 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+export const changeActiveRestaurantTab = (tab) => {
+  return {
+    type: CHANGE_RESTAURANT_TAB,
+    restaurantActiveTab: tab,
+  };
+};
+
+export const getActiveRestaurantTab = () => (_dispatch, getState) => {
+  const state = getState();
+  return activeTabSelector(state);
 };

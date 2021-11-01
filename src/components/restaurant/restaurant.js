@@ -1,20 +1,27 @@
-import { useState } from 'react';
 import { connect } from 'react-redux';
+import { NavLink, Switch, Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
 import {
   averageRatingSelector,
   restaurantSelector,
 } from '../../redux/selectors';
+import {
+  changeActiveRestaurantTab,
+  getActiveRestaurantTab,
+} from '../../redux/actions';
+import styles from './restaurant.module.css';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({
+  restaurant,
+  averageRating,
+  changeActiveRestaurantTab,
+  getActiveRestaurantTab,
+}) => {
   const { id, name, menu, reviews } = restaurant;
-
-  const [activeTab, setActiveTab] = useState('menu');
 
   const tabs = [
     { id: 'menu', label: 'Menu' },
@@ -26,9 +33,30 @@ const Restaurant = ({ restaurant, averageRating }) => {
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
-      <Tabs tabs={tabs} activeId={activeTab} onChange={setActiveTab} />
-      {activeTab === 'menu' && <Menu menu={menu} key={id} restId={id} />}
-      {activeTab === 'reviews' && <Reviews reviews={reviews} restId={id} />}
+      <div className={styles.tabs}>
+        {tabs.map(({ id: tabID, label }) => (
+          <NavLink
+            key={tabID}
+            to={`/restaurants/${id}/${tabID}`}
+            className={styles.tab}
+            activeClassName={styles.active}
+            onClick={() => changeActiveRestaurantTab(tabID)}
+          >
+            {label}
+          </NavLink>
+        ))}
+      </div>
+      <Switch>
+        <Route
+          path="/restaurants/:restId/menu"
+          component={() => <Menu menu={menu} key={id} restId={id} />}
+        />
+        <Route
+          path="/restaurants/:restId/reviews"
+          component={() => <Reviews reviews={reviews} restId={id} />}
+        />
+        <Redirect to={`/restaurants/:restId/${getActiveRestaurantTab()}`} />;
+      </Switch>
     </div>
   );
 };
@@ -43,9 +71,14 @@ Restaurant.propTypes = {
   averageRating: PropTypes.number,
 };
 
+const mapDispatchToProps = {
+  changeActiveRestaurantTab,
+  getActiveRestaurantTab,
+};
+
 const mapStateToProps = (state, props) => ({
   restaurant: restaurantSelector(state, props),
   averageRating: averageRatingSelector(state, props),
 });
 
-export default connect(mapStateToProps)(Restaurant);
+export default connect(mapStateToProps, mapDispatchToProps)(Restaurant);

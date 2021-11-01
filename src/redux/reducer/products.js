@@ -22,7 +22,8 @@ export default (state = initialState, action) =>
         draft.loading[restId] = false;
         draft.loaded[restId] = true;
         draft.error = null;
-        Object.assign(draft.entities, arrToMap(data));
+        const dataWithRestId = data.map((obj) => ({ ...obj, restId }));
+        Object.assign(draft.entities, arrToMap(dataWithRestId));
         break;
       }
       case LOAD_PRODUCTS + FAILURE: {
