@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Review from './review';
 import Loader from '../loader';
 import ReviewForm from './review-form';
@@ -8,18 +7,22 @@ import styles from './reviews.module.css';
 
 import { loadReviews, loadUsers } from '../../redux/actions';
 import {
+  restaurantSelector,
   reviewsLoadedSelector,
   usersLoadedSelector,
 } from '../../redux/selectors';
 
 const Reviews = ({
-  reviews,
-  restId,
+  restaurant,
   loadReviews,
   loadUsers,
   usersLoaded,
   reviewsLoaded,
+  match,
 }) => {
+  const { reviews } = restaurant;
+  const restId = match.params.restId;
+
   useEffect(() => {
     loadUsers();
     loadReviews(restId);
@@ -37,14 +40,10 @@ const Reviews = ({
   );
 };
 
-Reviews.propTypes = {
-  restId: PropTypes.string,
-  reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-};
-
 const mapStateToProps = (state, props) => ({
-  reviewsLoaded: reviewsLoadedSelector(state, props),
+  reviewsLoaded: reviewsLoadedSelector(state, props.match.params),
   usersLoaded: usersLoadedSelector(state, props),
+  restaurant: restaurantSelector(state, { id: props.match.params.restId }),
 });
 
 const mapDispatchToProps = {
