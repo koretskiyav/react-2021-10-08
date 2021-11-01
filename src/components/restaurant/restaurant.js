@@ -9,9 +9,18 @@ import {
   averageRatingSelector,
   restaurantSelector,
 } from '../../redux/selectors';
+import {
+  changeActiveRestaurantTab,
+  getActiveRestaurantTab,
+} from '../../redux/actions';
 import styles from './restaurant.module.css';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({
+  restaurant,
+  averageRating,
+  changeActiveRestaurantTab,
+  getActiveRestaurantTab,
+}) => {
   const { id, name, menu, reviews } = restaurant;
 
   const tabs = [
@@ -31,6 +40,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
             to={`/restaurants/${id}/${tabID}`}
             className={styles.tab}
             activeClassName={styles.active}
+            onClick={() => changeActiveRestaurantTab(tabID)}
           >
             {label}
           </NavLink>
@@ -45,7 +55,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
           path="/restaurants/:restId/reviews"
           component={() => <Reviews reviews={reviews} restId={id} />}
         />
-        <Redirect to={'/restaurants/:restId/menu'} />
+        <Redirect to={`/restaurants/:restId/${getActiveRestaurantTab()}`} />;
       </Switch>
     </div>
   );
@@ -61,9 +71,14 @@ Restaurant.propTypes = {
   averageRating: PropTypes.number,
 };
 
+const mapDispatchToProps = {
+  changeActiveRestaurantTab,
+  getActiveRestaurantTab,
+};
+
 const mapStateToProps = (state, props) => ({
   restaurant: restaurantSelector(state, props),
   averageRating: averageRatingSelector(state, props),
 });
 
-export default connect(mapStateToProps)(Restaurant);
+export default connect(mapStateToProps, mapDispatchToProps)(Restaurant);
