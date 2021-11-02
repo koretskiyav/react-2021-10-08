@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Loader from '../loader';
+import Tabs from '../tabs';
 import {
   restaurantsListSelector,
   restaurantsLoadingSelector,
@@ -11,30 +12,25 @@ import {
 } from '../../redux/selectors';
 import { loadRestaurants } from '../../redux/actions';
 
-import styles from './restaurants.module.css';
-
 function Restaurants({ restaurants, loading, loaded, loadRestaurants }) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
 
+  const match = useRouteMatch('/restaurants/:restId/:tabId');
+  const tabId = match?.params.tabId || '';
+
   if (loading) return <Loader />;
   if (!loaded) return 'No data :(';
 
+  const tabs = restaurants.map(({ id, name }) => ({
+    label: name,
+    url: `/restaurants/${id}/${tabId}`,
+  }));
+
   return (
     <div>
-      <div className={styles.tabs}>
-        {restaurants.map(({ id, name }) => (
-          <NavLink
-            key={id}
-            to={`/restaurants/${id}`}
-            className={styles.tab}
-            activeClassName={styles.active}
-          >
-            {name}
-          </NavLink>
-        ))}
-      </div>
+      <Tabs tabs={tabs} />
       <Switch>
         <Route path="/restaurants/:restId">
           {({ match }) => <Restaurant id={match.params.restId} />}
