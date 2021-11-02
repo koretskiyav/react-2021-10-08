@@ -1,0 +1,24 @@
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabs a {
+  height: auto;
+  text-align: center;
+  padding: 12px;
+}
+
+.tabs span {
+  cursor: pointer;
+}
+
+.tabs {
+  padding: 4px 12px;
+  color: var(--black);
+}
+
+.tabs.active {
+  border-bottom: 1px solid var(--black);
+}
