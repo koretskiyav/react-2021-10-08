@@ -6,6 +6,7 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "concurrently": "^6.3.0",
+    "connected-react-router": "^6.9.1",
     "immer": "^9.0.6",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
