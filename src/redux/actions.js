@@ -1,3 +1,4 @@
+import { replace } from 'connected-react-router';
 import {
   DECREMENT,
   INCREMENT,
@@ -63,6 +64,7 @@ export const loadReviews = (restId) => async (dispatch, getState) => {
     dispatch({ type: LOAD_REVIEWS + SUCCESS, restId, data });
   } catch (error) {
     dispatch({ type: LOAD_REVIEWS + FAILURE, restId, error });
+    dispatch(replace('/error'));
   }
 };
 
