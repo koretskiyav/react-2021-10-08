@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -7,11 +8,32 @@ import './basket.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import Loader from '../loader/loader';
+import {
+  orderProductsSelector,
+  totalSelector,
+  orderCheckoutLoadingSelector,
+  orderCheckoutLoadedSelector,
+  currentLocationSelector,
+} from '../../redux/selectors';
+import { submitOrder } from '../../redux/actions';
 import { UserConsumer } from '../../contexts/user-context';
+import { CurrencyConsumer } from '../../contexts/currency-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
-  // const { name } = useContext(userContext);
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  loading,
+  loaded,
+  submitOrder,
+  currentPathName,
+}) {
+  console.log('render Basket');
+  const onClick = useMemo(
+    () => (currentPathName === '/checkout' ? { onClick: submitOrder } : {}),
+    [currentPathName, submitOrder]
+  );
 
   if (!total) {
     return (
@@ -49,23 +71,37 @@ function Basket({ title = 'Basket', total, orderProducts }) {
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>
+            <CurrencyConsumer>
+              {({ convert }) => convert(total)}
+            </CurrencyConsumer>
+          </p>
         </div>
       </div>
       <Link to="/checkout">
-        <Button primary block>
+        <Button primary block {...onClick}>
           checkout
         </Button>
       </Link>
+      {loading && !loaded && (
+        <div className={styles.loader}>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
+    currentPathName: currentLocationSelector(state),
     total: totalSelector(state),
     orderProducts: orderProductsSelector(state),
+    loading: orderCheckoutLoadingSelector(state),
+    loaded: orderCheckoutLoadedSelector(state),
   };
 };
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = { submitOrder };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

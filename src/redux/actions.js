@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
 import {
   DECREMENT,
   INCREMENT,
@@ -9,6 +9,7 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  SUBMIT_ORDER,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -19,6 +20,7 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderCheckoutSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -76,4 +78,33 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+export const submitOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const order = orderCheckoutSelector(state);
+
+  dispatch({ type: SUBMIT_ORDER + REQUEST });
+
+  try {
+    const status = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    }).then((res) => res.json());
+
+    let action = { type: SUBMIT_ORDER + SUCCESS, status };
+    let data = ['/thankYou'];
+
+    if (status !== 'ok') {
+      action = { type: SUBMIT_ORDER + FAILURE, status };
+      data = ['/error', { error: status }];
+    }
+
+    dispatch(action);
+    dispatch(push(...data));
+  } catch (error) {
+    dispatch({ type: SUBMIT_ORDER + FAILURE, error });
+    dispatch(replace('/error', { error: error.message }));
+  }
 };
