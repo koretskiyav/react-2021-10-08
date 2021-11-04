@@ -55,3 +55,24 @@
     line-height: 20px;
   }
 }
+
+.review-item-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.review-item-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 5000ms, transform 5000ms;
+}
+
+.review-item-exit {
+  opacity: 1;
+}
+
+.review-item-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 5000ms, transform 5000ms;
+}
