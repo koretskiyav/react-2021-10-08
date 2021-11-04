@@ -18,6 +18,7 @@ import {
 } from '../../redux/selectors';
 import { submitOrder } from '../../redux/actions';
 import { UserConsumer } from '../../contexts/user-context';
+import { CurrencyConsumer } from '../../contexts/currency-context';
 
 function Basket({
   title = 'Basket',
@@ -70,7 +71,11 @@ function Basket({
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>
+            <CurrencyConsumer>
+              {({ convert }) => convert(total)}
+            </CurrencyConsumer>
+          </p>
         </div>
       </div>
       <Link to="/checkout">
