@@ -10,6 +10,8 @@ export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 export const LOAD_REVIEWS = 'LOAD_REVIEWS';
 export const LOAD_USERS = 'LOAD_USERS';
 
+export const MAKE_ORDER = 'MAKE_ORDER';
+
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
 export const FAILURE = '_FAILURE';

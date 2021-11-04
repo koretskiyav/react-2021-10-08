@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import styles from './basket.module.css';
@@ -7,11 +7,32 @@ import './basket.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderLoadingSelector,
+  orderProductsSelector,
+  totalSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import Price from '../price';
+import { makeOrder } from '../../redux/actions';
+import Loader from '../loader';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  orderLoading,
+  makeOrder,
+}) {
   // const { name } = useContext(userContext);
+
+  const location = useLocation();
+  const isCheckout = location.pathname === '/checkout';
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    makeOrder();
+  };
 
   if (!total) {
     return (
@@ -49,14 +70,25 @@ function Basket({ title = 'Basket', total, orderProducts }) {
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>
+            <Price value={total} />
+          </p>
         </div>
       </div>
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      {isCheckout ? (
+        <form onSubmit={handleSubmit}>
+          <Button primary block disabled={orderLoading}>
+            checkout
+          </Button>
+        </form>
+      ) : (
+        <Link to="/checkout">
+          <Button primary block>
+            checkout
+          </Button>
+        </Link>
+      )}
+      {orderLoading ? <Loader /> : undefined}
     </div>
   );
 }
@@ -65,7 +97,12 @@ const mapStateToProps = (state) => {
   return {
     total: totalSelector(state),
     orderProducts: orderProductsSelector(state),
+    orderLoading: orderLoadingSelector(state),
   };
 };
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = {
+  makeOrder,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

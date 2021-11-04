@@ -66,3 +66,7 @@
   padding: 11px 20px;
   height: 50px;
 }
+
+.button[disabled] {
+  opacity: 0.5;
+}

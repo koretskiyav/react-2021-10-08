@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
 import {
   DECREMENT,
   INCREMENT,
@@ -12,6 +12,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  MAKE_ORDER,
 } from './constants';
 
 import {
@@ -19,6 +20,8 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderProductsSelector,
+  orderLoadingSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -76,4 +79,48 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+function orderError(dispatch, error) {
+  dispatch({ type: MAKE_ORDER + FAILURE, error });
+  dispatch(push('/error'));
+}
+
+export const makeOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const loading = orderLoadingSelector(state);
+  const orders = orderProductsSelector(state);
+
+  const preparedRequest = orders.map((order) => {
+    return {
+      id: order.product.id,
+      amount: order.amount,
+    };
+  });
+
+  if (loading || !orders.length) return;
+  dispatch({ type: MAKE_ORDER + REQUEST });
+
+  try {
+    await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(preparedRequest),
+    })
+      .then((res) => {
+        if (res.status >= 200 && res.status < 400) {
+          dispatch({ type: MAKE_ORDER + SUCCESS });
+          dispatch(replace('/success'));
+        } else {
+          res.json().then((text) => {
+            orderError(dispatch, text);
+          });
+        }
+      })
+      .catch((error) => {
+        orderError(dispatch, error.message);
+      });
+  } catch (error) {
+    orderError(dispatch, error.message);
+  }
 };
