@@ -6,6 +6,7 @@ import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
+import CurrChanger from '../currchanger';
 import {
   averageRatingSelector,
   restaurantSelector,
@@ -24,6 +25,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
+      <CurrChanger />
       <Tabs tabs={tabs} />
       <Switch>
         <Route path="/restaurants/:restId/menu">
