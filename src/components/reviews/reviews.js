@@ -5,12 +5,14 @@ import Review from './review';
 import Loader from '../loader';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
+import reviewStyles from './review/review.module.css';
 
 import { loadReviews, loadUsers } from '../../redux/actions';
 import {
   reviewsLoadedSelector,
   usersLoadedSelector,
 } from '../../redux/selectors';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Reviews = ({
   reviews,
@@ -27,11 +29,26 @@ const Reviews = ({
 
   if (!usersLoaded || !reviewsLoaded) return <Loader />;
 
+  console.log('ff: ', reviewStyles);
+
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
-        <Review key={id} id={id} />
-      ))}
+      <TransitionGroup>
+        {reviews.map((id) => (
+          <CSSTransition
+            key={id}
+            timeout={500}
+            classNames={{
+              enter: reviewStyles['review-item-enter'],
+              enterActive: reviewStyles['review-item-enter-active'],
+              exit: reviewStyles['review-item-exit'],
+              exitActive: reviewStyles['review-item-exit-active'],
+            }}
+          >
+            <Review id={id} />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
       <ReviewForm restId={restId} />
     </div>
   );

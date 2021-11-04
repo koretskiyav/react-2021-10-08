@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { replace, push } from 'connected-react-router';
 import {
   DECREMENT,
   INCREMENT,
@@ -12,6 +12,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  SEND_ORDER,
 } from './constants';
 
 import {
@@ -19,6 +20,9 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  locationSelector,
+  orderSelector,
+  orderLoadedSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -76,4 +80,40 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+export const checkout = () => async (dispatch, getState) => {
+  const state = getState();
+  const location = locationSelector(state);
+
+  if (location.pathname !== '/checkout') {
+    return dispatch(push('/checkout'));
+  }
+
+  dispatch({ type: SEND_ORDER + REQUEST });
+
+  try {
+    const order = orderSelector(state);
+    const orderData = Object.entries(order).map(([id, amount]) => ({
+      id,
+      amount: amount,
+    }));
+
+    const result = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData),
+    });
+
+    const info = await result.json();
+
+    dispatch({ type: SEND_ORDER + SUCCESS, info, status: result.status });
+
+    const loaded = orderLoadedSelector(getState());
+
+    dispatch(push(loaded ? '/success' : '/error'));
+  } catch (error) {
+    dispatch({ type: SEND_ORDER + FAILURE, error });
+    dispatch(push('/error'));
+  }
 };

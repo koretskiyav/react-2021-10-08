@@ -1,16 +1,56 @@
-import { DECREMENT, INCREMENT, REMOVE } from '../constants';
+import produce from 'immer';
+import {
+  DECREMENT,
+  INCREMENT,
+  REMOVE,
+  SEND_ORDER,
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+} from '../constants';
 
-// { [productId]: amount }
-export default function (state = {}, action) {
-  const { type, id } = action;
-  switch (type) {
-    case INCREMENT:
-      return { ...state, [id]: (state[id] || 0) + 1 };
-    case DECREMENT:
-      return { ...state, [id]: state[id] > 0 ? (state[id] || 0) - 1 : 0 };
-    case REMOVE:
-      return { ...state, [id]: 0 };
-    default:
-      return state;
-  }
-}
+const initialState = {
+  entities: {},
+  loading: false,
+  loaded: false,
+  info: null,
+  error: null,
+};
+
+export default (state = initialState, action) =>
+  produce(state, (draft) => {
+    const { type, id, info, error, status = 200 } = action;
+    const entities = draft.entities;
+
+    switch (type) {
+      case INCREMENT:
+        entities[id] = (entities[id] || 0) + 1;
+        break;
+      case DECREMENT:
+        entities[id] = entities[id] > 0 ? (entities[id] || 0) - 1 : 0;
+        break;
+      case REMOVE:
+        entities[id] = 0;
+        break;
+      case SEND_ORDER + REQUEST: {
+        draft.loading = true;
+        draft.info = null;
+        draft.error = null;
+        break;
+      }
+      case SEND_ORDER + SUCCESS: {
+        draft.loading = false;
+        draft.loaded = status === 200;
+        draft.info = info;
+        break;
+      }
+      case SEND_ORDER + FAILURE: {
+        draft.loading = false;
+        draft.loaded = false;
+        draft.error = error;
+        break;
+      }
+      default:
+        return;
+    }
+  });
