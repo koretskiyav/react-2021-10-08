@@ -4,3 +4,14 @@
   max-width: 884px;
   width: 100%;
 }
+
+.enter {
+  opacity: 0;
+  transform: translateX(-1000px);
+}
+
+.enterActive{
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 600ms, transform 600ms;
+}
