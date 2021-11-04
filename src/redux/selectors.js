@@ -6,6 +6,14 @@ const orderSelector = (state) => state.order;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
+export const orderFetchSelector = (state) =>
+  Object.keys(state.order).map((key) => ({
+    id: key,
+    amount: state.order[key],
+  }));
+
+export const ordersSelector = (state) => state.order;
+
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -22,6 +30,9 @@ export const reviewsLoadedSelector = (state, props) =>
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
+
+export const fetchValue = (state) => state.fetchorder.value;
+export const fetchLoadingSelector = (state) => state.fetchorder.loading;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,

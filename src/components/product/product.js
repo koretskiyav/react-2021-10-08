@@ -4,6 +4,7 @@ import styles from './product.module.css';
 import Button from '../button';
 import { decrement, increment } from '../../redux/actions';
 import { amountSelector, productSelector } from '../../redux/selectors';
+import { CurrencyConsumer } from '../../contexts/currency-context';
 
 function Product({ product, amount, decrement, increment }) {
   return (
@@ -12,7 +13,12 @@ function Product({ product, amount, decrement, increment }) {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>
+            <CurrencyConsumer>
+              {({ rate }) => `${product.price * rate}`}
+            </CurrencyConsumer>
+            <CurrencyConsumer>{({ symbol }) => `${symbol}`}</CurrencyConsumer>
+          </div>
         </div>
         <div>
           <div className={styles.counter}>

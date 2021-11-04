@@ -1,0 +1,13 @@
+.divbutton {
+  color: white;
+  text-align: center;
+  background-color: #e5e5e5;
+}
+.but {
+  width: 10%;
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 5px;
+}

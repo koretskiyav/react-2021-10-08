@@ -12,6 +12,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  FETCH_ORDER,
 } from './constants';
 
 import {
@@ -19,6 +20,8 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  fetchLoadedSelector,
+  fetchLoadingSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -46,6 +49,30 @@ export const loadProducts = (restId) => ({
   CallAPI: `/api/products?id=${restId}`,
   restId,
 });
+
+export const fetchOrder = (order) => async (dispatch, getState) => {
+  const state = getState();
+  const loading = fetchLoadingSelector(state);
+
+  if (loading) return;
+  dispatch({ type: FETCH_ORDER + REQUEST });
+
+  try {
+    const data = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    }).then((res) => res.json());
+    dispatch({ type: FETCH_ORDER + SUCCESS, data });
+    if (data === 'ok') {
+      dispatch(replace('/done'));
+    } else {
+      dispatch(replace('/ordererror'));
+    }
+  } catch (error) {
+    dispatch({ type: FETCH_ORDER + FAILURE, error });
+  }
+};
 
 const _loadUsers = () => ({ type: LOAD_USERS, CallAPI: '/api/users' });
 
