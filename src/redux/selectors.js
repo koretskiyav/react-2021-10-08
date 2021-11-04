@@ -6,6 +6,12 @@ const orderSelector = (state) => state.order;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
+export const orderCheckoutSelector = createSelector(orderSelector, (order) =>
+  Object.entries(order).map(([id, amount]) => ({ id, amount }))
+);
+export const orderCheckoutLoadingSelector = (state) => state.checkout.loading;
+export const orderCheckoutLoadedSelector = (state) => state.checkout.loaded;
+
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -88,3 +94,6 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const currentLocationSelector = (state) =>
+  state.router.location.pathname;
