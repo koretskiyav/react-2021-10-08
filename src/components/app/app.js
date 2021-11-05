@@ -3,14 +3,14 @@ import Restaurants from '../restaurants';
 import Header from '../header';
 import Basket from '../basket';
 import Error from '../error';
-import { UserProvider } from '../../contexts/user-context';
+import { CurrencyProvider } from '../../contexts/currency-context';
 import { useState } from 'react';
 
 const App = () => {
-  const [name, setName] = useState('Andrey');
+  const [currency, setCurrency] = useState('$');
   return (
     <div>
-      <UserProvider value={{ name, setName }}>
+      <CurrencyProvider value={{ currency, setCurrency }}>
         <Header />
         <Switch>
           <Redirect exact from="/" to="/restaurants" />
@@ -20,7 +20,7 @@ const App = () => {
           <Route path="/success" component={() => <h2 style={{ 'text-align': 'center' }}>Thanks for your order!</h2>} />
           <Route component={() => <h2>404 - Not found :(</h2>} />
         </Switch>
-      </UserProvider>
+      </CurrencyProvider>
     </div >
   );
 };

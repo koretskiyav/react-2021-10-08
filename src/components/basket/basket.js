@@ -8,8 +8,8 @@ import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
 import { orderProductsSelector, totalSelector } from '../../redux/selectors';
-import { UserConsumer } from '../../contexts/user-context';
 import { placeOrder } from '../../redux/actions';
+import Currency from '../currency/currency';
 
 function Basket({ title = 'Basket', total, orderProducts, placeOrder }) {
   // const { name } = useContext(userContext);
@@ -28,9 +28,7 @@ function Basket({ title = 'Basket', total, orderProducts, placeOrder }) {
 
   return (
     <div className={styles.basket}>
-      <h4 className={styles.title}>
-        <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
-      </h4>
+      <h4 className={styles.title}>{title}</h4>
       {/* <h4 className={styles.title}>{`${name}'s ${title}`}</h4> */}
       <TransitionGroup>
         {orderProducts.map(({ product, amount, subtotal, restId }) => (
@@ -54,7 +52,8 @@ function Basket({ title = 'Basket', total, orderProducts, placeOrder }) {
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <Currency cost={total} />
+
         </div>
       </div>
       <Switch>
