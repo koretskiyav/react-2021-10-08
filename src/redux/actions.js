@@ -4,8 +4,9 @@ import {
   INCREMENT,
   REMOVE,
   ADD_REVIEW,
-  LOAD_RESTAURANTS,
+  PLACE_ORDER,
   CHANGE_RESTAURANT,
+  LOAD_RESTAURANTS,
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
@@ -19,6 +20,7 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderDataSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -36,6 +38,49 @@ export const addReview = (review, restId) => ({
   restId,
   generateId: ['reviewId', 'userId'],
 });
+
+const _sendRequest = (orderData) => {
+  return fetch(`/api/order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(orderData),
+  })
+    .then(async (res) => {
+      const responseData = await res.json();
+      if (res.ok) {
+        return responseData;
+      }
+      return Promise.reject(responseData)
+    })
+}
+
+export const placeOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const orderData = orderDataSelector(state);
+
+  try {
+    dispatch({ type: PLACE_ORDER + REQUEST, orderData });
+    _sendRequest(orderData)
+      .then(res => {
+        console.log(res)
+        dispatch({ type: PLACE_ORDER + SUCCESS, result: res });
+        dispatch(replace('/success'));
+      })
+      .catch((error) => {
+        console.log(error)
+        dispatch({ type: PLACE_ORDER + FAILURE, error: error });
+        dispatch(replace('/error'));
+      })
+  }
+
+  catch (error) {
+    console.log(error)
+    dispatch({ type: PLACE_ORDER + FAILURE, error });
+    dispatch(replace('/error'));
+  }
+}
 
 export const loadRestaurants = () => ({
   type: LOAD_RESTAURANTS,

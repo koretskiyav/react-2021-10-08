@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import styles from './basket.module.css';
@@ -9,9 +9,14 @@ import BasketItem from './basket-item';
 import Button from '../button';
 import { orderProductsSelector, totalSelector } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { placeOrder } from '../../redux/actions';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({ title = 'Basket', total, orderProducts, placeOrder }) {
   // const { name } = useContext(userContext);
+
+  // function placeOrder() {
+  //   console.log(orderProducts)
+  // }
 
   if (!total) {
     return (
@@ -52,11 +57,20 @@ function Basket({ title = 'Basket', total, orderProducts }) {
           <p>{`${total} $`}</p>
         </div>
       </div>
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      <Switch>
+        <Route path="/checkout">
+          <Button primary block onClick={placeOrder}>
+            place an order
+          </Button>
+        </Route>
+        <Route>
+          <Link to="/checkout">
+            <Button primary block>
+              go to cart
+            </Button>
+          </Link>
+        </Route>
+      </Switch>
     </div>
   );
 }
@@ -68,4 +82,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = { placeOrder }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

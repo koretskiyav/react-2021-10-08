@@ -69,6 +69,13 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
+export const orderDataSelector = createSelector(
+  [orderSelector],
+  (orderItems) => {
+    return Object.entries(orderItems).map(([id, amount]) => ({ id, amount }))
+  }
+)
+
 export const reviewWitUserSelector = createSelector(
   reviewSelector,
   usersSelector,
