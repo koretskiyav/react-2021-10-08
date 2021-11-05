@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
@@ -88,3 +88,20 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const productsToOrderSelector = createSelector(
+  orderSelector,
+  (order) => {
+    const productsToOrderArray = Object.keys(order).map((key) => ({
+      id: key,
+      amount: order[key],
+    }));
+    return productsToOrderArray;
+  }
+);
+
+export const orderErrorSelector = (state) => {
+  return state.order.error;
+};
+
+export const sendingBasketSelector = (state) => state.order.sending;

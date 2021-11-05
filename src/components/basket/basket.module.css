@@ -4,6 +4,14 @@
   position: relative;
 }
 
+.basketDisabled {
+  padding: 13px 16px 20px;
+  background-color: var(--pink);
+  position: relative;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .hr {
   margin: 14px 0;
 }
