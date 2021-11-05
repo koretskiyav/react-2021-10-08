@@ -3,14 +3,19 @@ import { Link } from 'react-router-dom';
 
 import Button from '../button';
 
+import { useConvert } from '../../hooks/use-convert';
+
 import { orderErrorSelector } from '../../redux/selectors';
 
 import styles from './order-error.module.css';
 
 const OrderError = ({ error }) => {
+  const convert = useConvert();
+  const errorText = error?.replace(/\$(\d+)/gi, (_, t) => convert(t));
+
   return (
     <h1 className={styles.page}>
-      <p>{error}</p>
+      <p>{errorText}</p>
       <div className={styles.actions}>
         <Link to="/checkout">
           <Button primary block>

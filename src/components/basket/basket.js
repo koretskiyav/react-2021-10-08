@@ -16,6 +16,7 @@ import {
 import { createOrder } from '../../redux/actions';
 
 import { UserConsumer } from '../../contexts/user-context';
+import { useConvert } from '../../hooks/use-convert';
 
 function Basket({
   title = 'Basket',
@@ -24,6 +25,7 @@ function Basket({
   createOrder,
   loading,
 }) {
+  const convert = useConvert();
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -64,7 +66,7 @@ function Basket({
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>{convert(total)}</p>
         </div>
       </div>
       <Switch>

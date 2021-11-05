@@ -5,6 +5,8 @@ import { increment, decrement, remove } from '../../../redux/actions';
 import Button from '../../button';
 import styles from './basket-item.module.css';
 
+import { useConvert } from '../../../hooks/use-convert';
+
 function BasketItem({
   product,
   amount,
@@ -14,6 +16,7 @@ function BasketItem({
   decrement,
   remove,
 }) {
+  const convert = useConvert();
   return (
     <div className={styles.basketItem}>
       <div className={styles.name}>
@@ -25,7 +28,7 @@ function BasketItem({
           <span className={styles.count}>{amount}</span>
           <Button onClick={increment} icon="plus" secondary small />
         </div>
-        <p className={cn(styles.count, styles.price)}>{subtotal} $</p>
+        <p className={cn(styles.count, styles.price)}>{convert(subtotal)}</p>
         <Button onClick={remove} icon="delete" secondary small />
       </div>
     </div>
