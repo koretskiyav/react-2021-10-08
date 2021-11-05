@@ -1,16 +1,26 @@
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import { sendOrderRequest } from '../../redux/actions';
 import styles from './basket.module.css';
 import './basket.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  sendingBasketSelector,
+  orderProductsSelector,
+  totalSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  sendOrderRequest,
+  sendingBasket,
+}) {
   // const { name } = useContext(userContext);
 
   if (!total) {
@@ -20,9 +30,8 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       </div>
     );
   }
-
   return (
-    <div className={styles.basket}>
+    <div className={sendingBasket ? styles.basketDisabled : styles.basket}>
       <h4 className={styles.title}>
         <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
       </h4>
@@ -53,7 +62,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         </div>
       </div>
       <Link to="/checkout">
-        <Button primary block>
+        <Button onClick={sendOrderRequest} primary block>
           checkout
         </Button>
       </Link>
@@ -65,7 +74,10 @@ const mapStateToProps = (state) => {
   return {
     total: totalSelector(state),
     orderProducts: orderProductsSelector(state),
+    sendingBasket: sendingBasketSelector(state),
   };
 };
-
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = {
+  sendOrderRequest,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);
