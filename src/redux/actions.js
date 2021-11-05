@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
 import {
   DECREMENT,
   INCREMENT,
@@ -12,6 +12,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  CHECKOUT,
 } from './constants';
 
 import {
@@ -19,6 +20,8 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderToCheckoutSelector,
+  routePathSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -76,4 +79,41 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+export const checkoutOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const path = routePathSelector(state);
+
+  switch (path) {
+    case '/checkout':
+      {
+        dispatch({ type: CHECKOUT + REQUEST });
+        const order = orderToCheckoutSelector(state);
+        try {
+          const response = await fetch('/api/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order),
+          });
+
+          const status = response.status;
+          if (status === 200) {
+            dispatch({ type: CHECKOUT + SUCCESS });
+            dispatch(push('/orser-success'));
+          } else {
+            const error = await response.json();
+            dispatch({ type: CHECKOUT + FAILURE, error });
+            dispatch(push('/orser-failed', error));
+          }
+        } catch (error) {
+          dispatch({ type: CHECKOUT + FAILURE, error });
+          dispatch(push('/error'));
+        }
+      }
+      break;
+    default:
+      dispatch(push('/checkout'));
+      break;
+  }
 };
