@@ -7,6 +7,7 @@ import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
 import Loader from '../loader';
+import Money from '../money';
 import {
   orderProductsSelector,
   totalSelector,
@@ -60,7 +61,9 @@ function Basket({
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>
+            <Money value={total} />
+          </p>
         </div>
       </div>
       <Button primary block onClick={checkoutOrder}>
