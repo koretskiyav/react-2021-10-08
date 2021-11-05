@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import cn from 'classnames';
+
 import { Link } from 'react-router-dom';
 import { increment, decrement, remove } from '../../../redux/actions';
 import Button from '../../button';
@@ -26,7 +26,7 @@ function BasketItem({
           <span className={styles.count}>{amount}</span>
           <Button onClick={increment} icon="plus" secondary small />
         </div>
-        <Currency className={cn(styles.count, styles.price)} cost={subtotal} />
+        <Currency cost={subtotal} />
         <Button onClick={remove} icon="delete" secondary small />
       </div>
     </div>
