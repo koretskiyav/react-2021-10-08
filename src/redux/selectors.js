@@ -2,9 +2,10 @@ import { createSelector } from 'reselect';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
+const routeLocationSelector = (state) => state.router.location;
 
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
@@ -88,3 +89,16 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const orderToCheckoutSelector = createSelector(orderSelector, (order) =>
+  Object.entries(order).reduce(
+    (acc, [id, amount]) => [...acc, { id, amount }],
+    []
+  )
+);
+
+export const routePathSelector = (state) =>
+  routeLocationSelector(state).pathname;
+
+export const chechoutSendingSelector = (state) => state.order.sending;
+export const chechoutErrorSelector = (state) => state.order.error;

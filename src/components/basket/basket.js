@@ -1,16 +1,28 @@
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import cn from 'classnames';
 import styles from './basket.module.css';
 import './basket.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import Loader from '../loader';
+import Money from '../money';
+import {
+  orderProductsSelector,
+  totalSelector,
+  chechoutSendingSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { checkoutOrder } from '../../redux/actions';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  checkoutOrder,
+  sending,
+}) {
   // const { name } = useContext(userContext);
 
   if (!total) {
@@ -22,7 +34,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
   }
 
   return (
-    <div className={styles.basket}>
+    <div className={cn(styles.basket, { [styles.disable]: sending })}>
       <h4 className={styles.title}>
         <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
       </h4>
@@ -49,14 +61,14 @@ function Basket({ title = 'Basket', total, orderProducts }) {
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>
+            <Money value={total} />
+          </p>
         </div>
       </div>
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      <Button primary block onClick={checkoutOrder}>
+        {sending ? <Loader /> : 'checkout'}
+      </Button>
     </div>
   );
 }
@@ -65,7 +77,11 @@ const mapStateToProps = (state) => {
   return {
     total: totalSelector(state),
     orderProducts: orderProductsSelector(state),
+    sending: chechoutSendingSelector(state),
   };
 };
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = {
+  checkoutOrder,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

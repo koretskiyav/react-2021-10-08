@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './product.module.css';
 import Button from '../button';
+import Money from '../money';
 import { decrement, increment } from '../../redux/actions';
 import { amountSelector, productSelector } from '../../redux/selectors';
 
@@ -12,12 +13,14 @@ function Product({ product, amount, decrement, increment }) {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>
+            <Money value={product.price} />
+          </div>
         </div>
         <div>
           <div className={styles.counter}>
             <div className={styles.count} data-id="product-amount">
-              {amount}
+              <Money value={amount} />
             </div>
             <div className={styles.buttons}>
               <Button
