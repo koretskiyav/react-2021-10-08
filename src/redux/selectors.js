@@ -5,6 +5,7 @@ const productsSelector = (state) => state.products.entities;
 const orderSelector = (state) => state.order;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
+export const errorSelector = (state) => state.order.error;
 
 export const activeIdRestaurantSelector = (state) => state.restaurants.activeId;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;

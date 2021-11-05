@@ -67,11 +67,14 @@ export const placeOrder = () => async (dispatch, getState) => {
         console.log(res)
         dispatch({ type: PLACE_ORDER + SUCCESS, result: res });
         dispatch(replace('/success'));
+        setTimeout(() => dispatch(replace('/')), 3000);
+
       })
       .catch((error) => {
         console.log(error)
         dispatch({ type: PLACE_ORDER + FAILURE, error: error });
         dispatch(replace('/error'));
+        setTimeout(() => dispatch(replace('/')), 3000);
       })
   }
 
